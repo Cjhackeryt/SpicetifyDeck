@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="SpicetifyDeck">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1db954" />
+      <stop offset="1" stop-color="#12833c" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="26" fill="url(#bg)" />
+  <rect x="26" y="34" width="76" height="60" rx="12" fill="#0b1220" opacity="0.82" />
+  <g fill="#1db954">
+    <rect x="38" y="62" width="7" height="20" rx="3.5" />
+    <rect x="50" y="52" width="7" height="40" rx="3.5" />
+    <rect x="62" y="44" width="7" height="56" rx="3.5" />
+    <rect x="74" y="54" width="7" height="36" rx="3.5" />
+    <rect x="86" y="60" width="7" height="24" rx="3.5" />
+  </g>
+  <rect x="38" y="42" width="34" height="5" rx="2.5" fill="#e8f7ee" />
+  <rect x="38" y="42" width="16" height="5" rx="2.5" fill="#f5c518" />
+</svg>

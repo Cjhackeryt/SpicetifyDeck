@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Actions.Transport.Play.Name" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="Actions.Transport.Play.Description" xml:space="preserve">
+    <value>Resume playback in the Spotify client.</value>
+  </data>
+  <data name="Actions.Transport.Pause.Name" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Actions.Transport.Pause.Description" xml:space="preserve">
+    <value>Pause playback in the Spotify client.</value>
+  </data>
+  <data name="Actions.Transport.TogglePlay.Name" xml:space="preserve">
+    <value>Toggle Play or Pause</value>
+  </data>
+  <data name="Actions.Transport.TogglePlay.Description" xml:space="preserve">
+    <value>Switch between playing and paused.</value>
+  </data>
+  <data name="Actions.Transport.Next.Name" xml:space="preserve">
+    <value>Next Track</value>
+  </data>
+  <data name="Actions.Transport.Next.Description" xml:space="preserve">
+    <value>Skip to the next track.</value>
+  </data>
+  <data name="Actions.Transport.Previous.Name" xml:space="preserve">
+    <value>Previous Track</value>
+  </data>
+  <data name="Actions.Transport.Previous.Description" xml:space="preserve">
+    <value>Go back to the previous track.</value>
+  </data>
+  <data name="Actions.RestartTrack.Name" xml:space="preserve">
+    <value>Restart Track</value>
+  </data>
+  <data name="Actions.RestartTrack.Description" xml:space="preserve">
+    <value>Jump back to the start of the current track.</value>
+  </data>
+  <data name="Actions.SeekTo.Name" xml:space="preserve">
+    <value>Seek to Position</value>
+  </data>
+  <data name="Actions.SeekTo.Description" xml:space="preserve">
+    <value>Jump to a time in seconds or a percentage of the current track.</value>
+  </data>
+  <data name="Actions.SeekTo.Mode.Label" xml:space="preserve">
+    <value>Position type</value>
+  </data>
+  <data name="Actions.SeekTo.Mode.Description" xml:space="preserve">
+    <value>Choose a time in seconds or a percentage of track duration.</value>
+  </data>
+  <data name="Actions.SeekTo.Mode.Percent" xml:space="preserve">
+    <value>Percentage</value>
+  </data>
+  <data name="Actions.SeekTo.Mode.Seconds" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
+  <data name="Actions.SeekTo.Value.Label" xml:space="preserve">
+    <value>Percentage</value>
+  </data>
+  <data name="Actions.SeekTo.Value.Description" xml:space="preserve">
+    <value>Position from 0 to 100 percent of the track.</value>
+  </data>
+  <data name="Actions.SeekTo.Seconds.Label" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
+  <data name="Actions.SeekTo.Seconds.Description" xml:space="preserve">
+    <value>Position in the track, in seconds.</value>
+  </data>
+  <data name="Actions.SeekTo.Errors.NoDuration" xml:space="preserve">
+    <value>Track duration is not available, so a percentage position cannot be used.</value>
+  </data>
+  <data name="Actions.SetVolume.Name" xml:space="preserve">
+    <value>Set Volume</value>
+  </data>
+  <data name="Actions.SetVolume.Description" xml:space="preserve">
+    <value>Set Spotify playback volume to an exact percentage.</value>
+  </data>
+  <data name="Actions.SetVolume.Volume.Label" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Actions.SetVolume.Volume.Description" xml:space="preserve">
+    <value>Volume from 0 to 100 percent.</value>
+  </data>
+  <data name="Actions.VolumeStep.Name" xml:space="preserve">
+    <value>Volume Up or Down</value>
+  </data>
+  <data name="Actions.VolumeStep.Description" xml:space="preserve">
+    <value>Raise or lower Spotify volume by a chosen step.</value>
+  </data>
+  <data name="Actions.VolumeStep.Step.Label" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="Actions.VolumeStep.Step.Description" xml:space="preserve">
+    <value>Volume change in percentage points.</value>
+  </data>
+  <data name="Actions.VolumeStep.Direction.Label" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Actions.VolumeStep.Direction.Description" xml:space="preserve">
+    <value>Raise or lower the current volume.</value>
+  </data>
+  <data name="Actions.VolumeStep.Direction.Up" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="Actions.VolumeStep.Direction.Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="Actions.Skip.Name" xml:space="preserve">
+    <value>Seek/Skip Forward or Backward</value>
+  </data>
+  <data name="Actions.Skip.Description" xml:space="preserve">
+    <value>Move forward or backward in the current track using Spotify's native skip controls.</value>
+  </data>
+  <data name="Actions.Skip.Seconds.Label" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
+  <data name="Actions.Skip.Seconds.Description" xml:space="preserve">
+    <value>How far to skip, in seconds.</value>
+  </data>
+  <data name="Actions.Skip.Direction.Label" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Actions.Skip.Direction.Description" xml:space="preserve">
+    <value>Whether to skip forwards or backwards.</value>
+  </data>
+  <data name="Actions.Skip.Direction.Forward" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="Actions.Skip.Direction.Backward" xml:space="preserve">
+    <value>Backward</value>
+  </data>
+  <data name="Actions.SetMute.Name" xml:space="preserve">
+    <value>Mute or Unmute</value>
+  </data>
+  <data name="Actions.SetMute.Description" xml:space="preserve">
+    <value>Silence Spotify, restore it, or toggle between the two.</value>
+  </data>
+  <data name="Actions.SetMute.Mode.Label" xml:space="preserve">
+    <value>Behaviour</value>
+  </data>
+  <data name="Actions.SetMute.Mode.Description" xml:space="preserve">
+    <value>Whether to toggle, mute, or unmute.</value>
+  </data>
+  <data name="Actions.SetMute.Mode.Toggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
+  <data name="Actions.SetMute.Mode.Mute" xml:space="preserve">
+    <value>Mute</value>
+  </data>
+  <data name="Actions.SetMute.Mode.Unmute" xml:space="preserve">
+    <value>Unmute</value>
+  </data>
+  <data name="Actions.ToggleLike.Name" xml:space="preserve">
+    <value>Like or Unlike Track</value>
+  </data>
+  <data name="Actions.ToggleLike.Description" xml:space="preserve">
+    <value>Save the current track to Liked Songs, remove it, or toggle between the two.</value>
+  </data>
+  <data name="Actions.ToggleLike.Mode.Label" xml:space="preserve">
+    <value>Behaviour</value>
+  </data>
+  <data name="Actions.ToggleLike.Mode.Description" xml:space="preserve">
+    <value>Whether to toggle, save, or remove.</value>
+  </data>
+  <data name="Actions.ToggleLike.Mode.Toggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
+  <data name="Actions.ToggleLike.Mode.Like" xml:space="preserve">
+    <value>Save to Liked Songs</value>
+  </data>
+  <data name="Actions.ToggleLike.Mode.Unlike" xml:space="preserve">
+    <value>Remove from Liked Songs</value>
+  </data>
+  <data name="Actions.AddToQueue.Name" xml:space="preserve">
+    <value>Add to Queue</value>
+  </data>
+  <data name="Actions.AddToQueue.Description" xml:space="preserve">
+    <value>Add a track to the end of the play queue.</value>
+  </data>
+  <data name="Actions.AddToQueue.Uri.Label" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="Actions.AddToQueue.Uri.Description" xml:space="preserve">
+    <value>The track to queue. Leave empty to queue the one already playing.</value>
+  </data>
+  <data name="Actions.AddToQueue.Uri.Placeholder" xml:space="preserve">
+    <value>Track id, link or spotify:track: URI</value>
+  </data>
+  <data name="Actions.RemoveFromQueue.Name" xml:space="preserve">
+    <value>Remove from Queue</value>
+  </data>
+  <data name="Actions.RemoveFromQueue.Description" xml:space="preserve">
+    <value>Take a track out of the play queue.</value>
+  </data>
+  <data name="Actions.RemoveFromQueue.Uri.Label" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="Actions.RemoveFromQueue.Uri.Description" xml:space="preserve">
+    <value>The track to remove. Leave empty to remove the one currently playing.</value>
+  </data>
+  <data name="Actions.RemoveFromQueue.Uri.Placeholder" xml:space="preserve">
+    <value>Track id, link or spotify:track: URI</value>
+  </data>
+  <data name="Actions.RemoveFromQueue.NoSupport" xml:space="preserve">
+    <value>This Spotify version does not let the bridge remove a track from the queue.</value>
+  </data>
+  <data name="Actions.ClearQueue.Name" xml:space="preserve">
+    <value>Clear Queue</value>
+  </data>
+  <data name="Actions.ClearQueue.Description" xml:space="preserve">
+    <value>Empty the play queue.</value>
+  </data>
+  <data name="Actions.ClearQueue.NoSupport" xml:space="preserve">
+    <value>This Spotify version does not let the bridge clear the queue.</value>
+  </data>
+  <data name="Actions.PlayUri.Name" xml:space="preserve">
+    <value>Play a URI</value>
+  </data>
+  <data name="Actions.PlayUri.Description" xml:space="preserve">
+    <value>Play a track, album, playlist or artist from its id, link or URI.</value>
+  </data>
+  <data name="Actions.PlayUri.Uri.Label" xml:space="preserve">
+    <value>What to play</value>
+  </data>
+  <data name="Actions.PlayUri.Uri.Description" xml:space="preserve">
+    <value>The id, link or URI to play.</value>
+  </data>
+  <data name="Actions.PlayUri.Uri.Placeholder" xml:space="preserve">
+    <value>Id, link or spotify: URI</value>
+  </data>
+  <data name="Actions.PlayUri.Kind.Label" xml:space="preserve">
+    <value>Kind</value>
+  </data>
+  <data name="Actions.PlayUri.Kind.Description" xml:space="preserve">
+    <value>What kind of thing is being played.</value>
+  </data>
+  <data name="Actions.PlayUri.Kind.Track" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="Actions.PlayUri.Kind.Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="Actions.PlayUri.Kind.Playlist" xml:space="preserve">
+    <value>Playlist</value>
+  </data>
+  <data name="Actions.PlayUri.Kind.Artist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="Actions.PlayUri.Errors.BadUri" xml:space="preserve">
+    <value>That is not an id, link or URI Spotify can use.</value>
+  </data>
+  <data name="Actions.PlayLikedSongs.Name" xml:space="preserve">
+    <value>Play Liked Songs</value>
+  </data>
+  <data name="Actions.PlayLikedSongs.Description" xml:space="preserve">
+    <value>Start playing the songs you have saved.</value>
+  </data>
+  <data name="Actions.OpenPage.Name" xml:space="preserve">
+    <value>Open in Spotify</value>
+  </data>
+  <data name="Actions.OpenPage.Description" xml:space="preserve">
+    <value>Open a Spotify page inside the client.</value>
+  </data>
+  <data name="Actions.OpenPage.Target.Label" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Actions.OpenPage.Target.Description" xml:space="preserve">
+    <value>Which page to open.</value>
+  </data>
+  <data name="Actions.OpenPage.Target.CurrentTrack" xml:space="preserve">
+    <value>The current track's album</value>
+  </data>
+  <data name="Actions.OpenPage.Target.CurrentArtist" xml:space="preserve">
+    <value>The current artist</value>
+  </data>
+  <data name="Actions.OpenPage.Target.CurrentAlbum" xml:space="preserve">
+    <value>The current album</value>
+  </data>
+  <data name="Actions.OpenPage.Target.LikedSongs" xml:space="preserve">
+    <value>Your Liked Songs</value>
+  </data>
+  <data name="Actions.OpenPage.Target.Custom" xml:space="preserve">
+    <value>Something else</value>
+  </data>
+  <data name="Actions.OpenPage.Uri.Label" xml:space="preserve">
+    <value>URI to open</value>
+  </data>
+  <data name="Actions.OpenPage.Uri.Description" xml:space="preserve">
+    <value>What to open, as a URI.</value>
+  </data>
+  <data name="Actions.OpenPage.Uri.Placeholder" xml:space="preserve">
+    <value>spotify: URI</value>
+  </data>
+  <data name="Actions.OpenPage.NoSupport" xml:space="preserve">
+    <value>This Spotify version does not let the bridge open pages.</value>
+  </data>
+  <data name="Actions.OpenSpotify.Name" xml:space="preserve">
+    <value>Open Spotify</value>
+  </data>
+  <data name="Actions.OpenSpotify.Description" xml:space="preserve">
+    <value>Bring the Spotify desktop client to the front.</value>
+  </data>
+  <data name="Actions.OpenSpotify.Uri.Label" xml:space="preserve">
+    <value>Open something specific</value>
+  </data>
+  <data name="Actions.OpenSpotify.Uri.Description" xml:space="preserve">
+    <value>A URI to open instead of the client's home page.</value>
+  </data>
+  <data name="Actions.OpenSpotify.Uri.Placeholder" xml:space="preserve">
+    <value>spotify: URI</value>
+  </data>
+  <data name="Actions.OpenSpotify.Errors.NotInstalled" xml:space="preserve">
+    <value>Spotify does not appear to be installed on this computer.</value>
+  </data>
+  <data name="Actions.OpenSpotify.Errors.NotRunning" xml:space="preserve">
+    <value>The Spotify client could not be started.</value>
+  </data>
+  <data name="Actions.Errors.NoCurrentTrack" xml:space="preserve">
+    <value>Nothing is playing in Spotify right now.</value>
+  </data>
+  <data name="Actions.Errors.NoBridge" xml:space="preserve">
+    <value>The Spicetify bridge is not connected to a running Spotify client.</value>
+  </data>
+  <data name="Actions.Errors.Cancelled" xml:space="preserve">
+    <value>The action was cancelled before it finished.</value>
+  </data>
+  <data name="Actions.Errors.Unexpected" xml:space="preserve">
+    <value>The action failed for an unexpected reason. See the plugin log for details.</value>
+  </data>
+
+  <data name="Variables.IsPlaying.Display" xml:space="preserve">
+    <value>Is playing</value>
+  </data>
+  <data name="Variables.IsPlaying.Description" xml:space="preserve">
+    <value>True while the Spotify client is playing audio.</value>
+  </data>
+  <data name="Variables.PlaybackState.Display" xml:space="preserve">
+    <value>Playback state</value>
+  </data>
+  <data name="Variables.PlaybackState.Description" xml:space="preserve">
+    <value>Whether Spotify is playing, paused or stopped.</value>
+  </data>
+  <data name="Variables.CurrentTrackId.Display" xml:space="preserve">
+    <value>Current track id</value>
+  </data>
+  <data name="Variables.CurrentTrackId.Description" xml:space="preserve">
+    <value>Spotify's identifier for the current track.</value>
+  </data>
+  <data name="Variables.CurrentPosition.Display" xml:space="preserve">
+    <value>Current position</value>
+  </data>
+  <data name="Variables.CurrentPosition.Description" xml:space="preserve">
+    <value>How far into the track playback is, in milliseconds. Writable, so a slider can seek.</value>
+  </data>
+  <data name="Variables.TrackDuration.Display" xml:space="preserve">
+    <value>Track duration</value>
+  </data>
+  <data name="Variables.TrackDuration.Description" xml:space="preserve">
+    <value>How long the current track is, in milliseconds.</value>
+  </data>
+  <data name="Variables.ProgressPercentage.Display" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="Variables.ProgressPercentage.Description" xml:space="preserve">
+    <value>How far through the track playback is, as a percentage.</value>
+  </data>
+  <data name="Variables.TrackName.Display" xml:space="preserve">
+    <value>Track name</value>
+  </data>
+  <data name="Variables.TrackName.Description" xml:space="preserve">
+    <value>Title of the current track.</value>
+  </data>
+  <data name="Variables.ArtistName.Display" xml:space="preserve">
+    <value>Artist name</value>
+  </data>
+  <data name="Variables.ArtistName.Description" xml:space="preserve">
+    <value>Artist credited on the current track.</value>
+  </data>
+  <data name="Variables.AlbumName.Display" xml:space="preserve">
+    <value>Album name</value>
+  </data>
+  <data name="Variables.AlbumName.Description" xml:space="preserve">
+    <value>Album the current track belongs to.</value>
+  </data>
+  <data name="Variables.AlbumArtist.Display" xml:space="preserve">
+    <value>Album artist</value>
+  </data>
+  <data name="Variables.AlbumArtist.Description" xml:space="preserve">
+    <value>Album artist, as the client reports it.</value>
+  </data>
+  <data name="Variables.TrackNumber.Display" xml:space="preserve">
+    <value>Track number</value>
+  </data>
+  <data name="Variables.TrackNumber.Description" xml:space="preserve">
+    <value>Position of the track within its album.</value>
+  </data>
+  <data name="Variables.DiscNumber.Display" xml:space="preserve">
+    <value>Disc number</value>
+  </data>
+  <data name="Variables.DiscNumber.Description" xml:space="preserve">
+    <value>Which disc of a multi disc album the track is on.</value>
+  </data>
+  <data name="Variables.Explicit.Display" xml:space="preserve">
+    <value>Explicit</value>
+  </data>
+  <data name="Variables.Explicit.Description" xml:space="preserve">
+    <value>Whether the track is marked explicit.</value>
+  </data>
+  <data name="Variables.TrackUri.Display" xml:space="preserve">
+    <value>Track URI</value>
+  </data>
+  <data name="Variables.TrackUri.Description" xml:space="preserve">
+    <value>The spotify:track: URI of the current track.</value>
+  </data>
+  <data name="Variables.AlbumUri.Display" xml:space="preserve">
+    <value>Album URI</value>
+  </data>
+  <data name="Variables.AlbumUri.Description" xml:space="preserve">
+    <value>The spotify:album: URI of the current album.</value>
+  </data>
+  <data name="Variables.ArtistUri.Display" xml:space="preserve">
+    <value>Artist URI</value>
+  </data>
+  <data name="Variables.ArtistUri.Description" xml:space="preserve">
+    <value>The spotify:artist: URI of the current artist.</value>
+  </data>
+  <data name="Variables.Volume.Display" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Variables.Volume.Description" xml:space="preserve">
+    <value>Playback volume as a percentage. Writable, so a slider can set it.</value>
+  </data>
+  <data name="Variables.Shuffle.Display" xml:space="preserve">
+    <value>Shuffle</value>
+  </data>
+  <data name="Variables.Shuffle.Description" xml:space="preserve">
+    <value>Whether shuffle is on. Writable.</value>
+  </data>
+  <data name="Variables.RepeatMode.Display" xml:space="preserve">
+    <value>Repeat mode</value>
+  </data>
+  <data name="Variables.RepeatMode.Description" xml:space="preserve">
+    <value>Whether repeat is off, repeating the track, or repeating the context. Writable.</value>
+  </data>
+  <data name="Variables.Muted.Display" xml:space="preserve">
+    <value>Muted</value>
+  </data>
+  <data name="Variables.Muted.Description" xml:space="preserve">
+    <value>Whether Spotify is silenced. Writable.</value>
+  </data>
+  <data name="Variables.ConnectionStatus.Display" xml:space="preserve">
+    <value>Connection status</value>
+  </data>
+  <data name="Variables.ConnectionStatus.Description" xml:space="preserve">
+    <value>A single word summarising whether the bridge is connected.</value>
+  </data>
+
+  <data name="Player.Name" xml:space="preserve">
+    <value>Spotify</value>
+  </data>
+
+
+  <data name="Ui.Settings.Title" xml:space="preserve">
+    <value>SpicetifyDeck</value>
+  </data>
+  <data name="Ui.Settings.Intro" xml:space="preserve">
+    <value>SpicetifyDeck drives the Spotify desktop client through a Spicetify extension. This page shows every link in that chain, so a failure can be pinned to the one that is broken.</value>
+  </data>
+  <data name="Ui.Settings.SpicetifyCli.Label" xml:space="preserve">
+    <value>Spicetify CLI</value>
+  </data>
+  <data name="Ui.Settings.SpicetifyVersion.Label" xml:space="preserve">
+    <value>Spicetify version</value>
+  </data>
+  <data name="Ui.Settings.Bridge.Label" xml:space="preserve">
+    <value>Bridge</value>
+  </data>
+  <data name="Ui.Settings.BridgeApplied.Label" xml:space="preserve">
+    <value>Loaded by Spotify</value>
+  </data>
+  <data name="Ui.Settings.BridgeCurrent.Label" xml:space="preserve">
+    <value>Everything up to date</value>
+  </data>
+  <data name="Ui.Settings.BridgeVersion.Label" xml:space="preserve">
+    <value>Bridge version</value>
+  </data>
+  <data name="Ui.Settings.WebSocket.Label" xml:space="preserve">
+    <value>WebSocket</value>
+  </data>
+  <data name="Ui.Settings.Spotify.Label" xml:space="preserve">
+    <value>Spotify</value>
+  </data>
+  <data name="Ui.Settings.Extension.Label" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="Ui.Settings.Path.Label" xml:space="preserve">
+    <value>Extension file:</value>
+  </data>
+  <data name="Ui.Settings.Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Ui.Settings.No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Ui.Settings.NotAvailable" xml:space="preserve">
+    <value>Not available</value>
+  </data>
+  <data name="Ui.Settings.RequiresApply" xml:space="preserve">
+    <value>The bridge file was updated because the Macro Deck address changed, but Spicetify has not applied it yet. Run Repair Bridge, then restart Spotify.</value>
+  </data>
+  <data name="Ui.Settings.InstallButton" xml:space="preserve">
+    <value>Install Bridge</value>
+  </data>
+  <data name="Ui.Settings.RepairButton" xml:space="preserve">
+    <value>Repair Bridge</value>
+  </data>
+  <data name="Ui.Settings.ResetButton" xml:space="preserve">
+    <value>Reset Authentication</value>
+  </data>
+  <data name="Ui.Settings.TestButton" xml:space="preserve">
+    <value>Test Connection</value>
+  </data>
+  <data name="Ui.Settings.UninstallButton" xml:space="preserve">
+    <value>Uninstall Bridge</value>
+  </data>
+  <data name="Ui.Settings.WebSocket.State" xml:space="preserve">
+    <value>{state}</value>
+  </data>
+  <data name="Issues.NoSpicetify.Title" xml:space="preserve">
+    <value>Spicetify was not found</value>
+  </data>
+  <data name="Issues.NoSpicetify.Description" xml:space="preserve">
+    <value>SpicetifyDeck drives the Spotify client through a Spicetify extension, so nothing works until Spicetify is installed. The Spicetify command line tool was not found on this computer.</value>
+  </data>
+  <data name="Issues.NoSpicetify.Resolve" xml:space="preserve">
+    <value>Install Spicetify from spicetify.app, run spicetify apply, then run the Install Spicetify Bridge action.</value>
+  </data>
+  <data name="Issues.NoSpicetify.Action" xml:space="preserve">
+    <value>What to do</value>
+  </data>
+  <data name="Issues.NoBridge.Title" xml:space="preserve">
+    <value>The bridge is not installed yet</value>
+  </data>
+  <data name="Issues.NoBridge.Description" xml:space="preserve">
+    <value>Spicetify is installed, so this is one step away from working. The SpicetifyDeck bridge is a separate file that belongs in Spicetify's Extensions folder and has not been written yet. Run the Install Spicetify Bridge action once, then restart Spotify. Nothing else is needed: the action writes the file, configures Spicetify and applies the change for you, so there is no command to run by hand.</value>
+  </data>
+  <data name="Issues.NoBridge.Resolve" xml:space="preserve">
+    <value>Run the Install Spicetify Bridge action, then restart Spotify.</value>
+  </data>
+  <data name="Issues.NoBridge.Action" xml:space="preserve">
+    <value>Install the bridge</value>
+  </data>
+  <data name="Issues.NotConnected.Title" xml:space="preserve">
+    <value>Not connected to Spotify</value>
+  </data>
+  <data name="Issues.NotConnected.Description" xml:space="preserve">
+    <value>The bridge is installed and Spicetify is configured to load it, but the Spotify client has stopped reporting through it. That normally means the client was closed, or it failed and is showing its own error screen. Start Spotify again; if it goes straight back to an error screen, run Repair Spicetify Bridge with Spotify completely closed. Never run a bridge action while Spotify is open, because applying a change rewrites the client and can break a running Spotify.</value>
+  </data>
+  <data name="Issues.NotConnected.Resolve" xml:space="preserve">
+    <value>Quit Spotify completely and start it again. If it is still not connected, run Repair Spicetify Bridge with Spotify closed.</value>
+  </data>
+  <data name="Issues.NotConnected.Action" xml:space="preserve">
+    <value>Repair the bridge</value>
+  </data>
+  <data name="Issues.Corrupted.Title" xml:space="preserve">
+    <value>The bridge file needs repairing</value>
+  </data>
+  <data name="Issues.Corrupted.Description" xml:space="preserve">
+    <value>A bridge file is present but unusable, usually because it still holds an unsubstituted placeholder or a token from an earlier run of SpicetifyDeck. Repair rewrites it and re-applies Spicetify, keeping the current token.</value>
+  </data>
+  <data name="Issues.Corrupted.Resolve" xml:space="preserve">
+    <value>Run the Repair Spicetify Bridge action, then restart Spotify.</value>
+  </data>
+  <data name="Issues.Corrupted.Action" xml:space="preserve">
+    <value>Repair the bridge</value>
+  </data>
+  <data name="Issues.AuthFailed.Title" xml:space="preserve">
+    <value>The bridge was refused</value>
+  </data>
+  <data name="Issues.AuthFailed.Description" xml:space="preserve">
+    <value>The Spotify client connected but presented an authentication token this plugin did not issue, so it was refused and no state was read. Repair rewrites the bridge file with the current token.</value>
+  </data>
+  <data name="Issues.AuthFailed.Resolve" xml:space="preserve">
+    <value>Run the Repair Spicetify Bridge action, then restart Spotify.</value>
+  </data>
+  <data name="Issues.AuthFailed.Action" xml:space="preserve">
+    <value>Repair the bridge</value>
+  </data>
+  <data name="Issues.UpdatePending.Title" xml:space="preserve">
+    <value>Bridge update waiting for a restart</value>
+  </data>
+  <data name="Issues.UpdatePending.Description" xml:space="preserve">
+    <value>The bridge on disk is newer than the one Spotify is running. Spotify loads an extension only when it starts, so it is still using the previous copy and that copy keeps working. Quit Spotify completely and start it again to pick up the new bridge. Do not reset the authentication: the bridge Spotify is running and this plugin already share the same token.</value>
+  </data>
+  <data name="Issues.UpdatePending.Resolve" xml:space="preserve">
+    <value>Quit Spotify completely and start it again, or run Repair Spicetify Bridge while Spotify is closed.</value>
+  </data>
+  <data name="Issues.UpdatePending.Action" xml:space="preserve">
+    <value>Restart Spotify to apply</value>
+  </data>
+  <data name="Issues.Unknown.Resolve" xml:space="preserve">
+    <value>That issue is not one this plugin knows about.</value>
+  </data>
+
+  <data name="Actions.Bridge.Install.Name" xml:space="preserve">
+    <value>Install Spicetify Bridge</value>
+  </data>
+  <data name="Actions.Bridge.Install.Description" xml:space="preserve">
+    <value>Find Spicetify, write the bridge into its Extensions folder, configure it to load, apply the change, and verify all of it. The existing authentication token is kept, so an install can never leave Spotify and this plugin holding different tokens. From 2.1.0 the address is a fixed port, so this only has to be done once. Spotify must be quit and started again afterwards, because Spicetify loads extensions into the client only when it applies and when the client starts.</value>
+  </data>
+  <data name="Actions.Bridge.ResetAuth.Name" xml:space="preserve">
+    <value>Reset Bridge Authentication</value>
+  </data>
+  <data name="Actions.Bridge.ResetAuth.Description" xml:space="preserve">
+    <value>Generate a new authentication token and rewrite the bridge to match. The bridge Spotify is running is refused until you quit Spotify and run this again, which is the point. Use it only when the token is genuinely lost or a bridge is holding one this plugin no longer accepts. Nothing else rotates the token.</value>
+  </data>
+  <data name="Actions.Bridge.Errors.Failed" xml:space="preserve">
+    <value>The bridge operation did not finish. See the plugin log for details.</value>
+  </data>
+  <data name="Actions.Bridge.Reinstall.Description" xml:space="preserve">
+    <value>Write, configure, apply and verify the bridge again, keeping the current authentication token. Use this after updating SpicetifyDeck, or if the installed bridge is pointing at an address from an older version. Quit Spotify before running it, then start Spotify again.</value>
+  </data>
+  <data name="Actions.Bridge.Reinstall.Name" xml:space="preserve">
+    <value>Reinstall Spicetify Bridge</value>
+  </data>
+  <data name="Actions.Bridge.Repair.Description" xml:space="preserve">
+    <value>Rewrite the bridge file and re-apply Spicetify, keeping the current authentication token. Use this when the bridge is installed but not connecting, or when Spotify is still holding an address from an earlier version. Quit Spotify first, then start it again.</value>
+  </data>
+  <data name="Actions.Bridge.Repair.Name" xml:space="preserve">
+    <value>Repair Spicetify Bridge</value>
+  </data>
+  <data name="Actions.Bridge.Restart.Description" xml:space="preserve">
+    <value>Drop the current bridge connection so the Spotify client reconnects on its own. Useful when the bridge is installed and configured but has stopped reporting.</value>
+  </data>
+  <data name="Actions.Bridge.Restart.Name" xml:space="preserve">
+    <value>Restart Bridge</value>
+  </data>
+  <data name="Actions.Bridge.Uninstall.Description" xml:space="preserve">
+    <value>Remove SpicetifyDeck from the Spicetify configuration and delete the bridge file. Every other extension you have is left exactly as it was.</value>
+  </data>
+  <data name="Actions.Bridge.Uninstall.Name" xml:space="preserve">
+    <value>Uninstall Spicetify Bridge</value>
+  </data>
+  <data name="Variables.DeckConnectionStatus.Description" xml:space="preserve">
+    <value>Where the bridge has got to: Spicetify Not Installed, Bridge Not Installed, Bridge Corrupted, Bridge Installed - Waiting for Spotify, Bridge Disconnected, Authentication Failed, Bridge Update Pending, or Bridge Connected.</value>
+  </data>
+  <data name="Variables.DeckConnectionStatus.Display" xml:space="preserve">
+    <value>SpicetifyDeck connection status</value>
+  </data>
+  <data name="Variables.DeckSpotifyConnected.Description" xml:space="preserve">
+    <value>Whether a Spotify client is connected to the bridge and reporting its state.</value>
+  </data>
+  <data name="Variables.DeckSpotifyConnected.Display" xml:space="preserve">
+    <value>SpicetifyDeck Spotify connected</value>
+  </data>
+
+</root>

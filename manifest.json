@@ -1,0 +1,46 @@
+﻿{
+  "manifestVersion": 1,
+  "id": "com.cjhackeryt.spicetifydeck",
+  "name": "SpicetifyDeck",
+  "version": "2.5.0",
+  "description": "Control your Spotify desktop client from your Macro Deck through Spicetify: playback, volume, queue, search, library, live variables and a now-playing widget. No Spotify account or developer setup required.",
+  "icon": "Assets/icon.svg",
+  "entrypoints": {
+    "win-x64": {
+      "executable": "runtimes/win-x64/SpicetifyDeck.dll",
+      "runtime": {
+        "kind": "FrameworkDependent",
+        "dotnetVersion": "10.0"
+      }
+    },
+    "linux-x64": {
+      "executable": "runtimes/linux-x64/SpicetifyDeck.dll",
+      "runtime": {
+        "kind": "FrameworkDependent",
+        "dotnetVersion": "10.0"
+      }
+    },
+    "osx-x64": {
+      "executable": "runtimes/osx-x64/SpicetifyDeck.dll",
+      "runtime": {
+        "kind": "FrameworkDependent",
+        "dotnetVersion": "10.0"
+      }
+    },
+    "osx-arm64": {
+      "executable": "runtimes/osx-arm64/SpicetifyDeck.dll",
+      "runtime": {
+        "kind": "FrameworkDependent",
+        "dotnetVersion": "10.0"
+      }
+    }
+  },
+  "publisher": {
+    "name": "CJ Hacker YT and NeonLightning"
+  },
+  "repository": "https://github.com/CJ-Hacker-YT/SpicetifyDeck",
+  "license": "MIT",
+  "compatibility": {
+    "macroDeck": ">=3.0.0-beta.12"
+  }
+}
