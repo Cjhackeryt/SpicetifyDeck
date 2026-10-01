@@ -2,6 +2,7 @@ using MacroDeck.Sdk.MusicPlayer;
 using Serilog;
 using SpicetifyDeck.Bridge;
 using SpicetifyDeck.State;
+using SpicetifyDeck.Variables;
 using Xunit;
 
 namespace SpicetifyDeck.Tests;
@@ -138,6 +139,53 @@ public sealed class StateStabilityTests
 		Assert.True(snapshot.IsPlaying);
 		Assert.True(snapshot.ShuffleEnabled);
 		Assert.Equal(RepeatMode.Track, snapshot.RepeatMode);
+	}
+
+	[Fact]
+	public void LikedTrackStateIsReportedAndCanChange()
+	{
+		using var manager = CreateManager();
+
+		manager.Accept(new BridgeState
+		{
+			Track = new BridgeTrack { Uri = "spotify:track:one", Name = "Song", IsLiked = true },
+		});
+		Assert.True(manager.Current.IsLiked);
+		var likedVariable = SpicetifyVariableCatalog.Find("track-liked")!;
+		Assert.True(likedVariable.Read(manager.Current) is true);
+
+		var change = manager.Accept(new BridgeState
+		{
+			Track = new BridgeTrack { Uri = "spotify:track:one", IsLiked = false },
+		});
+
+		Assert.False(manager.Current.IsLiked);
+		Assert.True(likedVariable.Read(manager.Current) is false);
+		Assert.Contains(nameof(SpotifySnapshot.IsLiked), change!.Fields);
+	}
+
+	[Fact]
+	public void ContextVariablesExposePlaylistAndRadioNameAndUri()
+	{
+		using var manager = CreateManager();
+		var playlistName = SpicetifyVariableCatalog.Find("playlist-name")!;
+		var playlistUri = SpicetifyVariableCatalog.Find("playlist-uri")!;
+
+		manager.Accept(new BridgeState
+		{
+			Context = new BridgeContext { Name = "Daily Mix", Uri = "spotify:playlist:mix-id" },
+		});
+
+		Assert.Equal("Daily Mix", playlistName.Read(manager.Current));
+		Assert.Equal("spotify:playlist:mix-id", playlistUri.Read(manager.Current));
+
+		manager.Accept(new BridgeState
+		{
+			Context = new BridgeContext { Name = "Artist Radio", Uri = "spotify:radio:artist-id" },
+		});
+
+		Assert.Equal("Artist Radio", playlistName.Read(manager.Current));
+		Assert.Equal("spotify:radio:artist-id", playlistUri.Read(manager.Current));
 	}
 
 	[Fact]

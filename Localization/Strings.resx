@@ -401,6 +401,12 @@
   <data name="Variables.AlbumArtist.Description" xml:space="preserve">
     <value>Album artist, as the client reports it.</value>
   </data>
+  <data name="Variables.PlaylistName.Display" xml:space="preserve">
+    <value>Playlist or radio name</value>
+  </data>
+  <data name="Variables.PlaylistName.Description" xml:space="preserve">
+    <value>Name of the playlist or radio source currently playing.</value>
+  </data>
   <data name="Variables.TrackNumber.Display" xml:space="preserve">
     <value>Track number</value>
   </data>
@@ -419,6 +425,12 @@
   <data name="Variables.Explicit.Description" xml:space="preserve">
     <value>Whether the track is marked explicit.</value>
   </data>
+  <data name="Variables.TrackLiked.Display" xml:space="preserve">
+    <value>Track is liked</value>
+  </data>
+  <data name="Variables.TrackLiked.Description" xml:space="preserve">
+    <value>Whether the current track is saved to Liked Songs.</value>
+  </data>
   <data name="Variables.TrackUri.Display" xml:space="preserve">
     <value>Track URI</value>
   </data>
@@ -430,6 +442,12 @@
   </data>
   <data name="Variables.AlbumUri.Description" xml:space="preserve">
     <value>The spotify:album: URI of the current album.</value>
+  </data>
+  <data name="Variables.PlaylistUri.Display" xml:space="preserve">
+    <value>Playlist or radio URI</value>
+  </data>
+  <data name="Variables.PlaylistUri.Description" xml:space="preserve">
+    <value>Spotify URI of the playlist or radio source currently playing.</value>
   </data>
   <data name="Variables.ArtistUri.Display" xml:space="preserve">
     <value>Artist URI</value>

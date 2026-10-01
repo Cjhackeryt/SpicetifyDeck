@@ -10,7 +10,7 @@
 	var RECONNECT_MIN_MS = 1000;
 	var RECONNECT_MAX_MS = 15000;
 	var COMMAND_TIMEOUT_MS = 8000;
-	var VERSION = "2.5.0";
+	var VERSION = "2.5.1";
 
 	var socket = null;
 	var reconnectDelay = RECONNECT_MIN_MS;
@@ -462,6 +462,7 @@
 			trackNumber: number(parseInt(meta.album_track_number, 10)) || number(item.track_number) || null,
 			discNumber: number(parseInt(meta.album_disc_number, 10)) || number(item.disc_number) || null,
 			releaseDate: meta.release_date || item.release_date || null,
+			isLiked: bool2(function () { return call(Spicetify.Player, "getHeart"); }),
 			explicit: bool2(function () {
 				if (meta.canvas && meta.canvas.explicit !== undefined) {
 					return meta.canvas.explicit === "true";
@@ -500,15 +501,19 @@
 		if (!data) {
 			return null;
 		}
-		var meta = data.context_metadata || {};
-		var uri = data.context_uri || meta.context_uri || null;
-		if (!uri && !meta.name && !meta.title) {
+		var context = data.context || data.contextInfo || {};
+		var meta = data.context_metadata || data.contextMetadata || context.metadata || {};
+		var uri = data.context_uri || data.contextUri || meta.context_uri || meta.contextUri
+			|| context.uri || context.context_uri || context.contextUri || null;
+		var name = meta.name || meta.title || meta.context_description
+			|| context.name || context.title || data.context_name || data.contextName || null;
+		if (!uri && !name) {
 			return null;
 		}
 		return {
 			uri: uri,
-			name: meta.name || meta.title || null,
-			type: uri ? String(uri).split(":")[0] : null
+			name: name,
+			type: uri ? String(uri).split(":")[1] || null : null
 		};
 	}
 
@@ -530,7 +535,8 @@
 			history: !!(Spicetify.Platform && Spicetify.Platform.History && Spicetify.Platform.History.push),
 			queue: !!(Spicetify.Queue && typeof Spicetify.Queue.get === "function"),
 			removeFromQueue: !!(Spicetify.removeFromQueue || (Spicetify.Platform && Spicetify.Platform.PlayerAPI && Spicetify.Platform.PlayerAPI.removeFromQueue)),
-			clearQueue: !!(Spicetify.Platform && Spicetify.Platform.PlayerAPI && Spicetify.Platform.PlayerAPI.clearQueue)
+			clearQueue: !!(Spicetify.Platform && Spicetify.Platform.PlayerAPI && Spicetify.Platform.PlayerAPI.clearQueue),
+			trackLikeStatus: !!(Spicetify.Player && typeof Spicetify.Player.getHeart === "function")
 		};
 	}
 

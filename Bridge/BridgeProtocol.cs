@@ -190,6 +190,9 @@ public sealed record BridgeTrack
 
 	[JsonPropertyName("explicit")]
 	public bool? Explicit { get; init; }
+
+	[JsonPropertyName("isLiked")]
+	public bool? IsLiked { get; init; }
 }
 
 public sealed record BridgeContext
@@ -235,6 +238,9 @@ public sealed record BridgeCapabilities
 
 	[JsonPropertyName("clearQueue")]
 	public bool ClearQueue { get; init; }
+
+	[JsonPropertyName("trackLikeStatus")]
+	public bool TrackLikeStatus { get; init; }
 
 }
 

@@ -23,6 +23,7 @@ public sealed class SpotifyStateManager : IDisposable
 		nameof(SpotifySnapshot.DiscNumber),
 		nameof(SpotifySnapshot.ReleaseDate),
 		nameof(SpotifySnapshot.Explicit),
+		nameof(SpotifySnapshot.IsLiked),
 	];
 
 		private static readonly string[] AllFields =
@@ -50,6 +51,7 @@ public sealed class SpotifyStateManager : IDisposable
 		nameof(SpotifySnapshot.DiscNumber),
 		nameof(SpotifySnapshot.ReleaseDate),
 		nameof(SpotifySnapshot.Explicit),
+		nameof(SpotifySnapshot.IsLiked),
 		nameof(SpotifySnapshot.ContextUri),
 		nameof(SpotifySnapshot.ContextName),
 		nameof(SpotifySnapshot.ContextType),
@@ -523,6 +525,7 @@ public sealed class SpotifyStateManager : IDisposable
 			fields[nameof(SpotifySnapshot.DiscNumber)] = track.DiscNumber;
 			fields[nameof(SpotifySnapshot.ReleaseDate)] = track.ReleaseDate;
 			fields[nameof(SpotifySnapshot.Explicit)] = track.Explicit;
+			fields[nameof(SpotifySnapshot.IsLiked)] = track.IsLiked;
 		}
 
 		if (state.Context is { } context)
@@ -585,6 +588,7 @@ public sealed class SpotifyStateManager : IDisposable
 			DiscNumber = AsInt(Get(nameof(SpotifySnapshot.DiscNumber))),
 			ReleaseDate = AsString(Get(nameof(SpotifySnapshot.ReleaseDate))),
 			Explicit = AsBool(Get(nameof(SpotifySnapshot.Explicit))),
+			IsLiked = AsBool(Get(nameof(SpotifySnapshot.IsLiked))),
 
 			ContextUri = AsString(Get(nameof(SpotifySnapshot.ContextUri))),
 			ContextName = AsString(Get(nameof(SpotifySnapshot.ContextName))),
@@ -644,6 +648,7 @@ public sealed class SpotifyStateManager : IDisposable
 		Compare(nameof(SpotifySnapshot.TrackNumber), previous.TrackNumber, next.TrackNumber);
 		Compare(nameof(SpotifySnapshot.DiscNumber), previous.DiscNumber, next.DiscNumber);
 		Compare(nameof(SpotifySnapshot.Explicit), previous.Explicit, next.Explicit);
+		Compare(nameof(SpotifySnapshot.IsLiked), previous.IsLiked, next.IsLiked);
 
 		CompareText(nameof(SpotifySnapshot.ContextUri), previous.ContextUri, next.ContextUri);
 		CompareText(nameof(SpotifySnapshot.ContextName), previous.ContextName, next.ContextName);

@@ -36,6 +36,7 @@ public sealed record SpotifySnapshot
 	public int? DiscNumber { get; init; }
 	public string? ReleaseDate { get; init; }
 	public bool? Explicit { get; init; }
+	public bool? IsLiked { get; init; }
 
 	// Context
 	public string? ContextUri { get; init; }

@@ -66,10 +66,14 @@ public static class SpicetifyVariableCatalog
 			s => s.AlbumName, VariableSource.Transport),
 		Text("album_artist", Strings.Variables.AlbumArtist.Display(), Strings.Variables.AlbumArtist.Description(),
 			s => s.AlbumArtistName, VariableSource.Transport),
+		Text("playlist_name", Strings.Variables.PlaylistName.Display(), Strings.Variables.PlaylistName.Description(),
+			s => s.ContextName, VariableSource.Transport),
 		Text("track_uri", Strings.Variables.TrackUri.Display(), Strings.Variables.TrackUri.Description(),
 			s => s.TrackUri),
 		Text("album_uri", Strings.Variables.AlbumUri.Display(), Strings.Variables.AlbumUri.Description(),
 			s => s.AlbumUri),
+		Text("playlist_uri", Strings.Variables.PlaylistUri.Display(), Strings.Variables.PlaylistUri.Description(),
+			s => s.ContextUri, VariableSource.Transport),
 		Text("artist_uri", Strings.Variables.ArtistUri.Display(), Strings.Variables.ArtistUri.Description(),
 			s => s.ArtistUri),
 		Text("current_track_id", Strings.Variables.CurrentTrackId.Display(), Strings.Variables.CurrentTrackId.Description(),
@@ -96,6 +100,8 @@ public static class SpicetifyVariableCatalog
 			s => s.DiscNumber, source: VariableSource.Stable),
 		Flag("explicit", Strings.Variables.Explicit.Display(), Strings.Variables.Explicit.Description(),
 			s => s.Explicit, VariableSource.Stable),
+		Flag("track_liked", Strings.Variables.TrackLiked.Display(), Strings.Variables.TrackLiked.Description(),
+			s => s.IsLiked, VariableSource.Transport),
 
 		// Connection
 		Text("connection_status", Strings.Variables.ConnectionStatus.Display(), Strings.Variables.ConnectionStatus.Description(),

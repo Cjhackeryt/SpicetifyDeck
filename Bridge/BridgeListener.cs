@@ -19,6 +19,9 @@ internal sealed class BridgeListener(
 	PluginSettings settings,
 	Serilog.ILogger logger) : IHostedService, IAsyncDisposable
 {
+	private static readonly TimeSpan WebSocketKeepAliveInterval = TimeSpan.FromSeconds(15);
+	private static readonly TimeSpan WebSocketKeepAliveTimeout = TimeSpan.FromSeconds(45);
+
 	private readonly Serilog.ILogger _logger = logger.ForContext<BridgeListener>();
 	private WebApplication? _app;
 	private int _disposed;
@@ -123,7 +126,11 @@ internal sealed class BridgeListener(
 		builder.WebHost.UseKestrel(options => options.Listen(IPAddress.Loopback, port));
 
 		var app = builder.Build();
-		app.UseWebSockets();
+		app.UseWebSockets(new WebSocketOptions
+		{
+			KeepAliveInterval = WebSocketKeepAliveInterval,
+			KeepAliveTimeout = WebSocketKeepAliveTimeout,
+		});
 		Map(app);
 
 		try

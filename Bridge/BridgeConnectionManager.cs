@@ -23,7 +23,7 @@ public sealed class BridgeConnectionManager(BridgeCredentials credentials, ILogg
 {
 		private static readonly TimeSpan CommandTimeout = TimeSpan.FromSeconds(10);
 
-		private static readonly TimeSpan StateStaleAfter = TimeSpan.FromSeconds(20);
+		private static readonly TimeSpan StateStaleAfter = TimeSpan.FromSeconds(90);
 
 		private static readonly TimeSpan HelloTimeout = TimeSpan.FromSeconds(10);
 
