@@ -99,12 +99,12 @@ public sealed class CatalogTests
 
 			// Current track
 			"track_name", "artist_name", "album_name", "album_artist", "track_uri", "album_uri",
-			"artist_uri", "current_track_id",
+			"artist_uri", "current_track_id", "playlist_name", "playlist_uri",
 
 			"volume", "shuffle", "repeat_mode", "muted",
 
 			// Track metadata
-			"track_number", "disc_number", "explicit",
+			"track_number", "disc_number", "explicit", "track_liked",
 
 			// Connection
 			"connection_status",
