@@ -37,6 +37,9 @@ public static class SpicetifyVariableCatalog
 		new(name, VariableType.Boolean, read, new SpicetifyVariableLabels(display, description),
 			Writable: writable, Source: source);
 
+	private static string FormatDuration(TimeSpan duration) =>
+		$"{(long)duration.TotalMinutes}:{duration.Seconds:00}";
+
 	private static IReadOnlyList<SpicetifyVariable> Build() =>
 	[
 		// Playback
@@ -49,11 +52,11 @@ public static class SpicetifyVariableCatalog
 				PlaybackState.Paused => "Paused",
 				_ => "Stopped",
 			}, VariableSource.Transport, "play"),
-		Number("current_position", Strings.Variables.CurrentPosition.Display(), Strings.Variables.CurrentPosition.Description(),
-			s => s.PositionKnown ? s.CurrentPosition.TotalMilliseconds : null, "ms", VariableSemanticKinds.Duration, 0,
-			VariableSource.Transport, writable: true, commitOnRelease: true),
-		Number("track_duration", Strings.Variables.TrackDuration.Display(), Strings.Variables.TrackDuration.Description(),
-			s => s.Duration?.TotalMilliseconds, "ms", VariableSemanticKinds.Duration, 0),
+		Text("current_position", Strings.Variables.CurrentPosition.Display(), Strings.Variables.CurrentPosition.Description(),
+			s => s.PositionKnown ? FormatDuration(s.CurrentPosition) : null, VariableSource.Transport,
+			writable: true),
+		Text("track_duration", Strings.Variables.TrackDuration.Display(), Strings.Variables.TrackDuration.Description(),
+			s => s.Duration is { } duration ? FormatDuration(duration) : null, VariableSource.Transport),
 		Number("progress_percentage", Strings.Variables.ProgressPercentage.Display(), Strings.Variables.ProgressPercentage.Description(),
 			s => SpicetifyValues.Percent(s.ProgressFraction), "%", VariableSemanticKinds.Percentage, 1,
 			VariableSource.Transport),
@@ -74,6 +77,14 @@ public static class SpicetifyVariableCatalog
 			s => s.AlbumUri),
 		Text("playlist_uri", Strings.Variables.PlaylistUri.Display(), Strings.Variables.PlaylistUri.Description(),
 			s => s.ContextUri, VariableSource.Transport),
+		Text("queue_next_track_name", Strings.Variables.QueueNextTrackName.Display(), Strings.Variables.QueueNextTrackName.Description(),
+			s => s.QueueNextTracks is { Count: > 0 } tracks ? tracks[0].Name : null, VariableSource.Transport),
+		Text("queue_next_track_uri", Strings.Variables.QueueNextTrackUri.Display(), Strings.Variables.QueueNextTrackUri.Description(),
+			s => s.QueueNextTracks is { Count: > 0 } tracks ? tracks[0].Uri : null, VariableSource.Transport),
+		Text("queue_previous_track_name", Strings.Variables.QueuePreviousTrackName.Display(), Strings.Variables.QueuePreviousTrackName.Description(),
+			s => s.QueuePreviousTracks is { Count: > 0 } tracks ? tracks[^1].Name : null, VariableSource.Transport),
+		Text("queue_previous_track_uri", Strings.Variables.QueuePreviousTrackUri.Display(), Strings.Variables.QueuePreviousTrackUri.Description(),
+			s => s.QueuePreviousTracks is { Count: > 0 } tracks ? tracks[^1].Uri : null, VariableSource.Transport),
 		Text("artist_uri", Strings.Variables.ArtistUri.Display(), Strings.Variables.ArtistUri.Description(),
 			s => s.ArtistUri),
 		Text("current_track_id", Strings.Variables.CurrentTrackId.Display(), Strings.Variables.CurrentTrackId.Description(),

@@ -14,8 +14,6 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 	private readonly BridgeConnectionManager _bridge;
 	private readonly SpicetifyBridgeService _bridgeService;
 	private readonly ILogger _logger;
-		private readonly System.Collections.Concurrent.ConcurrentDictionary<string, object?> _lastStatusValues =
-		new(StringComparer.OrdinalIgnoreCase);
 
 	public SpicetifyVariableProvider(
 		SpotifyStateManager state,
@@ -85,19 +83,24 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 		catch (Exception exception)
 		{
 			_logger.Debug(exception, "Reading the bridge variable {Variable} failed.", variable.Name);
-			value = null;
+			return VariableReading.Of(ConnectionFallback(_bridge.ConnectionState));
 		}
 
 		if (value is null)
 		{
-			return _lastStatusValues.TryGetValue(variable.LocalId, out var remembered)
-				? VariableReading.Of(remembered)
-				: VariableReading.Unavailable;
+			return VariableReading.Of(ConnectionFallback(_bridge.ConnectionState));
 		}
 
-		_lastStatusValues[variable.LocalId] = value;
 		return VariableReading.Of(value);
 	}
+
+	internal static string ConnectionFallback(BridgeConnectionState state) => state switch
+	{
+		BridgeConnectionState.Connected => "Bridge Connected",
+		BridgeConnectionState.Connecting or BridgeConnectionState.Authenticating => "Waiting for Spotify",
+		BridgeConnectionState.AuthenticationFailed => "Authentication Failed",
+		_ => "Bridge Disconnected",
+	};
 
 		public async ValueTask<VariableWriteResult> SetValueAsync(
 		string localId, object? value, CancellationToken cancellationToken = default)
@@ -130,7 +133,7 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 
 			case "current_position":
 			{
-				if (!TryReadNumber(value, out var milliseconds))
+				if (!TryReadPosition(value, out var milliseconds))
 				{
 					return VariableWriteResult.InvalidValue();
 				}
@@ -246,6 +249,33 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 				number = double.NaN;
 				return false;
 		}
+	}
+
+	private static bool TryReadPosition(object? value, out double milliseconds)
+	{
+		var text = value switch
+		{
+			string stringValue => stringValue,
+			JsonElement { ValueKind: JsonValueKind.String } element => element.GetString(),
+			_ => null,
+		};
+
+		if (text is not null)
+		{
+			var parts = text.Split(':');
+			if (parts.Length == 2
+				&& long.TryParse(parts[0], System.Globalization.NumberStyles.None,
+					System.Globalization.CultureInfo.InvariantCulture, out var minutes)
+				&& int.TryParse(parts[1], System.Globalization.NumberStyles.None,
+					System.Globalization.CultureInfo.InvariantCulture, out var seconds)
+				&& minutes >= 0 && seconds is >= 0 and < 60)
+			{
+				milliseconds = (minutes * 60d + seconds) * 1000d;
+				return true;
+			}
+		}
+
+		return TryReadNumber(value, out milliseconds);
 	}
 
 	private static bool TryReadBoolean(object? value, out bool state)

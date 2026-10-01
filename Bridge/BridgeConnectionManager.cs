@@ -40,8 +40,6 @@ public sealed class BridgeConnectionManager(BridgeCredentials credentials, ILogg
 	private bool _authenticating;
 	private DateTimeOffset? _listenerStartedAt;
 
-		public string Token => credentials.Token;
-
 		public bool HasAuthenticationFailure { get; private set; }
 
 		public string? AuthenticationFailureReason { get; private set; }
@@ -144,19 +142,6 @@ public sealed class BridgeConnectionManager(BridgeCredentials credentials, ILogg
 		}
 	}
 
-	public DateTimeOffset? LastReportAt
-	{
-		get
-		{
-			lock (_sessionGate)
-			{
-				return _session is { } session && session.LastStateAt != default
-					? session.LastStateAt
-					: null;
-			}
-		}
-	}
-
 		public event Func<BridgeState, CancellationToken, Task>? StateReceived;
 
 		public event Action<bool>? ConnectionChanged;
@@ -173,19 +158,6 @@ public sealed class BridgeConnectionManager(BridgeCredentials credentials, ILogg
 	}
 
 		public bool HasEverConnected => _hasEverConnected;
-
-		public TimeSpan SinceLastReport
-	{
-		get
-		{
-			lock (_sessionGate)
-			{
-				return _session is { } session && session.LastStateAt != default
-					? DateTimeOffset.UtcNow - session.LastStateAt
-					: TimeSpan.MaxValue;
-			}
-		}
-	}
 
 		public async Task<BridgeCommandResult> SendAsync(
 		string kind,
@@ -291,9 +263,6 @@ public sealed class BridgeConnectionManager(BridgeCredentials credentials, ILogg
 		{
 			await SendAsync(session, new BridgeWelcome
 			{
-				SessionId = session.Id,
-				UnavailableTimeoutSeconds = 30,
-				StateIntervalMs = 1000,
 			}, cancellationToken).ConfigureAwait(false);
 
 			while (socket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
@@ -438,7 +407,7 @@ public sealed class BridgeConnectionManager(BridgeCredentials credentials, ILogg
 			return false;
 		}
 
-		if (!Matches(presented, Token))
+		if (!Matches(presented, credentials.Token))
 		{
 			_logger.Warning("A bridge client presented a token this plugin did not issue. Reinstall the bridge.");
 			await RefuseAsync(socket, "The bridge token does not match. Run Repair Spicetify Bridge.").ConfigureAwait(false);

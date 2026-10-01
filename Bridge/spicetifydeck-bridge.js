@@ -10,7 +10,7 @@
 	var RECONNECT_MIN_MS = 1000;
 	var RECONNECT_MAX_MS = 15000;
 	var COMMAND_TIMEOUT_MS = 8000;
-	var VERSION = "2.5.1";
+	var VERSION = "2.6.1";
 
 	var socket = null;
 	var reconnectDelay = RECONNECT_MIN_MS;
@@ -124,7 +124,7 @@
 			reconnectDelay = RECONNECT_MIN_MS;
 
 			watchPlayer();
-			send({ type: "hello", token: TOKEN, bridgeVersion: VERSION });
+			send({ type: "hello", token: TOKEN });
 		};
 
 		socket.onmessage = function (event) {
@@ -153,6 +153,7 @@
 
 				lastSentTrack = null;
 				lastSentContext = null;
+				lastSentQueue = null;
 				lastSentControls = null;
 				lastSentPlayback = null;
 				announcedOnce = false;
@@ -241,6 +242,7 @@
 
 	var lastSentTrack = null;
 	var lastSentContext = null;
+	var lastSentQueue = null;
 	var lastSentControls = null;
 	var lastSentPlayback = null;
 	var announcedOnce = false;
@@ -283,7 +285,7 @@
 		var state = buildState();
 		var hasResults = Object.keys(pendingResults).length > 0;
 
-		var hasState = state.playback || state.track || state.context || state.controls
+		var hasState = state.playback || state.track || state.context || state.queue || state.controls
 			|| state.capabilities || state.client;
 		var now = Date.now();
 		if (!hasState && !hasResults && now - lastReportAt < HEARTBEAT_INTERVAL_MS) {
@@ -319,15 +321,25 @@
 		var state = {};
 
 		var track = retainTrack(readTrack(data));
-		if (changed(track, lastSentTrack)) {
-			state.track = track;
-			lastSentTrack = track;
+		var trackPayload = track ? Object.assign({}, track) : track;
+		if (trackPayload) {
+			delete trackPayload.durationMs;
+		}
+		if (changed(trackPayload, lastSentTrack)) {
+			state.track = trackPayload;
+			lastSentTrack = trackPayload;
 		}
 
 		var context = retainContext(readContext(data));
 		if (changed(context, lastSentContext)) {
 			state.context = context;
 			lastSentContext = context;
+		}
+
+		var queue = readQueue(data);
+		if (queue !== null && changed(queue, lastSentQueue)) {
+			state.queue = queue;
+			lastSentQueue = queue;
 		}
 
 		var controls = {
@@ -443,7 +455,6 @@
 
 		return {
 			uri: uri,
-			uid: item.uid || null,
 			name: trackName,
 			artistName: artistName,
 
@@ -512,8 +523,45 @@
 		}
 		return {
 			uri: uri,
-			name: name,
-			type: uri ? String(uri).split(":")[1] || null : null
+			name: name
+		};
+	}
+
+	function readQueueTrack(entry) {
+		if (!entry || typeof entry !== "object") {
+			return null;
+		}
+
+		var contextTrack = entry.contextTrack || entry.track || entry;
+		var item = contextTrack.item || contextTrack;
+		var metadata = contextTrack.metadata || item.metadata || {};
+		var uri = contextTrack.uri || item.uri || metadata.entity_uri || null;
+		var name = contextTrack.name || item.name || metadata.title || null;
+
+		return uri || name ? { name: name, uri: uri } : null;
+	}
+
+	function readQueue(data) {
+		var queue = null;
+		try {
+			queue = Spicetify.Queue || null;
+		} catch (error) {
+			queue = null;
+		}
+
+		var next = queue && Array.isArray(queue.nextTracks) ? queue.nextTracks
+			: data && Array.isArray(data.nextItems) ? data.nextItems : null;
+		var previous = queue && Array.isArray(queue.prevTracks) ? queue.prevTracks
+			: queue && Array.isArray(queue.previousTracks) ? queue.previousTracks
+			: data && Array.isArray(data.previousItems) ? data.previousItems : null;
+
+		if (!next && !previous) {
+			return null;
+		}
+
+		return {
+			nextTracks: (next || []).map(readQueueTrack).filter(Boolean),
+			previousTracks: (previous || []).map(readQueueTrack).filter(Boolean)
 		};
 	}
 
@@ -529,14 +577,9 @@
 
 	function readCapabilities() {
 		return {
-			player: !!(Spicetify.Player && Spicetify.Player.seek),
-			playerApi: !!(Spicetify.Platform && Spicetify.Platform.PlayerAPI),
-			cosmos: !!(Spicetify.CosmosAsync && Spicetify.CosmosAsync.get),
 			history: !!(Spicetify.Platform && Spicetify.Platform.History && Spicetify.Platform.History.push),
-			queue: !!(Spicetify.Queue && typeof Spicetify.Queue.get === "function"),
 			removeFromQueue: !!(Spicetify.removeFromQueue || (Spicetify.Platform && Spicetify.Platform.PlayerAPI && Spicetify.Platform.PlayerAPI.removeFromQueue)),
-			clearQueue: !!(Spicetify.Platform && Spicetify.Platform.PlayerAPI && Spicetify.Platform.PlayerAPI.clearQueue),
-			trackLikeStatus: !!(Spicetify.Player && typeof Spicetify.Player.getHeart === "function")
+			clearQueue: !!(Spicetify.Platform && Spicetify.Platform.PlayerAPI && Spicetify.Platform.PlayerAPI.clearQueue)
 		};
 	}
 
@@ -605,9 +648,6 @@
 		},
 		setMute: function (payload) {
 			Spicetify.Player.setMute(payload.muted === true);
-		},
-		toggleMute: function () {
-			Spicetify.Player.toggleMute();
 		},
 		setShuffle: function (payload) {
 			Spicetify.Player.setShuffle(payload.enabled === true);
@@ -680,10 +720,6 @@
 			return 1;
 		}
 		return 0;
-	}
-
-	function readPosition() {
-		return num(call(Spicetify.Player, "getProgress"), 0);
 	}
 
 	function seekTo(positionMs) {

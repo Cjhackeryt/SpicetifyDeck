@@ -18,7 +18,6 @@ public static class BridgeCommandKind
 	// Volume and modes
 	public const string SetVolume = "setVolume";
 	public const string SetMute = "setMute";
-	public const string ToggleMute = "toggleMute";
 	public const string SetShuffle = "setShuffle";
 	public const string SetRepeat = "setRepeat";
 
@@ -41,11 +40,9 @@ public sealed record BridgeCommandResult
 {
 	public bool Ok { get; init; }
 
-	public string? Value { get; init; }
-
 	public string? Error { get; init; }
 
-	public static BridgeCommandResult Success(string? value = null) => new() { Ok = true, Value = value };
+	public static BridgeCommandResult Success() => new() { Ok = true };
 
 	public static BridgeCommandResult Failure(string error) => new() { Ok = false, Error = error };
 
@@ -57,6 +54,4 @@ public sealed record BridgeCommandResult
 		public static BridgeCommandResult Offline() =>
 		new() { Ok = false, Error = "The Spicetify bridge is not connected to a running Spotify client." };
 
-		public static BridgeCommandResult Unsupported(string what) =>
-		new() { Ok = false, Error = $"This Spotify version does not expose {what} to the bridge." };
 }

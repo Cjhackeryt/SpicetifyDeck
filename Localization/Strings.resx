@@ -363,13 +363,13 @@
     <value>Current position</value>
   </data>
   <data name="Variables.CurrentPosition.Description" xml:space="preserve">
-    <value>How far into the track playback is, in milliseconds. Writable, so a slider can seek.</value>
+    <value>How far into the track playback is, in minutes and seconds (m:ss). Writable to seek; enter a value in the same format.</value>
   </data>
   <data name="Variables.TrackDuration.Display" xml:space="preserve">
     <value>Track duration</value>
   </data>
   <data name="Variables.TrackDuration.Description" xml:space="preserve">
-    <value>How long the current track is, in milliseconds.</value>
+    <value>How long the current track is, in minutes and seconds (m:ss).</value>
   </data>
   <data name="Variables.ProgressPercentage.Display" xml:space="preserve">
     <value>Progress percentage</value>
@@ -406,6 +406,30 @@
   </data>
   <data name="Variables.PlaylistName.Description" xml:space="preserve">
     <value>Name of the playlist or radio source currently playing.</value>
+  </data>
+  <data name="Variables.QueueNextTrackName.Display" xml:space="preserve">
+    <value>Next queued track</value>
+  </data>
+  <data name="Variables.QueueNextTrackName.Description" xml:space="preserve">
+    <value>Name of the next track in Spotify's queue.</value>
+  </data>
+  <data name="Variables.QueueNextTrackUri.Display" xml:space="preserve">
+    <value>Next queued track URI</value>
+  </data>
+  <data name="Variables.QueueNextTrackUri.Description" xml:space="preserve">
+    <value>Spotify URI of the next track in the queue.</value>
+  </data>
+  <data name="Variables.QueuePreviousTrackName.Display" xml:space="preserve">
+    <value>Previous queued track</value>
+  </data>
+  <data name="Variables.QueuePreviousTrackName.Description" xml:space="preserve">
+    <value>Name of the most recently played track in Spotify's queue history.</value>
+  </data>
+  <data name="Variables.QueuePreviousTrackUri.Display" xml:space="preserve">
+    <value>Previous queued track URI</value>
+  </data>
+  <data name="Variables.QueuePreviousTrackUri.Description" xml:space="preserve">
+    <value>Spotify URI of the most recently played track in queue history.</value>
   </data>
   <data name="Variables.TrackNumber.Display" xml:space="preserve">
     <value>Track number</value>
@@ -678,11 +702,4 @@
   <data name="Variables.DeckConnectionStatus.Display" xml:space="preserve">
     <value>SpicetifyDeck connection status</value>
   </data>
-  <data name="Variables.DeckSpotifyConnected.Description" xml:space="preserve">
-    <value>Whether a Spotify client is connected to the bridge and reporting its state.</value>
-  </data>
-  <data name="Variables.DeckSpotifyConnected.Display" xml:space="preserve">
-    <value>SpicetifyDeck Spotify connected</value>
-  </data>
-
 </root>

@@ -253,6 +253,7 @@ public sealed class VariableStabilityTests
 			IsPlayingKnown = true,
 			PositionKnown = true,
 			Position = TimeSpan.FromSeconds(30),
+			Duration = TimeSpan.FromSeconds(30),
 
 			CapturedAt = DateTimeOffset.UtcNow,
 			ShuffleEnabled = true,
@@ -263,12 +264,7 @@ public sealed class VariableStabilityTests
 
 		Assert.Equal(true, SpicetifyVariableCatalog.Find("is-playing")!.Read(snapshot));
 		Assert.Equal("Playing", SpicetifyVariableCatalog.Find("playback-state")!.Read(snapshot));
-		Assert.InRange(
-			Convert.ToDouble(
-				SpicetifyVariableCatalog.Find("current-position")!.Read(snapshot),
-				System.Globalization.CultureInfo.InvariantCulture),
-			30000d,
-			31000d);
+		Assert.Equal("0:30", SpicetifyVariableCatalog.Find("current-position")!.Read(snapshot));
 		Assert.Equal(true, SpicetifyVariableCatalog.Find("shuffle")!.Read(snapshot));
 		Assert.Equal("Context", SpicetifyVariableCatalog.Find("repeat-mode")!.Read(snapshot));
 	}

@@ -8,6 +8,17 @@ namespace SpicetifyDeck.Tests;
 
 public sealed class VariableConcurrencyTests
 {
+	[Theory]
+	[InlineData(BridgeConnectionState.Disconnected, "Bridge Disconnected")]
+	[InlineData(BridgeConnectionState.Connecting, "Waiting for Spotify")]
+	[InlineData(BridgeConnectionState.Authenticating, "Waiting for Spotify")]
+	[InlineData(BridgeConnectionState.AuthenticationFailed, "Authentication Failed")]
+	[InlineData(BridgeConnectionState.Connected, "Bridge Connected")]
+	public void ConnectionStatusFallbackIsAlwaysAvailable(BridgeConnectionState state, string expected)
+	{
+		Assert.Equal(expected, SpicetifyVariableProvider.ConnectionFallback(state));
+	}
+
 	[Fact]
 	public void ReadingEveryVariableFromManyThreadsNeverThrowsOrReturnsUnavailable()
 	{
@@ -57,9 +68,9 @@ public sealed class VariableConcurrencyTests
 				Explicit = false,
 				ReleaseDate = "2020-01-01",
 			},
-			Context = new BridgeContext { Uri = "spotify:playlist:abc", Name = "A Playlist", Type = "playlist" },
+			Context = new BridgeContext { Uri = "spotify:playlist:abc", Name = "A Playlist" },
 			Client = new BridgeClient { Platform = "win32", DeviceName = "PC" },
-			Capabilities = new BridgeCapabilities { Player = true },
+			Capabilities = new BridgeCapabilities { History = true },
 		});
 
 		var ids = provider.Variables.Select(definition => definition.Id).OfType<string>().ToArray();
