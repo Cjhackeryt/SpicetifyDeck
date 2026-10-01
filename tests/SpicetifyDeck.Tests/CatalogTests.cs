@@ -77,6 +77,22 @@ public sealed class CatalogTests
 	}
 
 	[Fact]
+	public void TrackPositionAndDurationUseMinutesAndSeconds()
+	{
+		var snapshot = new SpotifySnapshot
+		{
+			Position = TimeSpan.FromSeconds(83),
+			PositionKnown = true,
+			Duration = TimeSpan.FromSeconds(125),
+		};
+
+		Assert.Equal("1:23", SpicetifyVariableCatalog.Find("current-position")!.Read(snapshot));
+		Assert.Equal("2:05", SpicetifyVariableCatalog.Find("track-duration")!.Read(snapshot));
+		Assert.Equal(VariableType.Text, SpicetifyVariableCatalog.Find("current-position")!.Type);
+		Assert.Equal(VariableType.Text, SpicetifyVariableCatalog.Find("track-duration")!.Type);
+	}
+
+	[Fact]
 	public void AMissingValueIsNullRatherThanAnEmptyStringOrTheMarker()
 	{
 		var snapshot = new SpotifySnapshot();

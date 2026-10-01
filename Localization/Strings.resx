@@ -363,13 +363,13 @@
     <value>Current position</value>
   </data>
   <data name="Variables.CurrentPosition.Description" xml:space="preserve">
-    <value>How far into the track playback is, in milliseconds. Writable, so a slider can seek.</value>
+    <value>How far into the track playback is, in minutes and seconds (m:ss). Writable to seek; enter a value in the same format.</value>
   </data>
   <data name="Variables.TrackDuration.Display" xml:space="preserve">
     <value>Track duration</value>
   </data>
   <data name="Variables.TrackDuration.Description" xml:space="preserve">
-    <value>How long the current track is, in milliseconds.</value>
+    <value>How long the current track is, in minutes and seconds (m:ss).</value>
   </data>
   <data name="Variables.ProgressPercentage.Display" xml:space="preserve">
     <value>Progress percentage</value>

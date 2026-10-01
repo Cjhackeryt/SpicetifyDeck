@@ -37,6 +37,9 @@ public static class SpicetifyVariableCatalog
 		new(name, VariableType.Boolean, read, new SpicetifyVariableLabels(display, description),
 			Writable: writable, Source: source);
 
+	private static string FormatDuration(TimeSpan duration) =>
+		$"{(long)duration.TotalMinutes}:{duration.Seconds:00}";
+
 	private static IReadOnlyList<SpicetifyVariable> Build() =>
 	[
 		// Playback
@@ -49,11 +52,11 @@ public static class SpicetifyVariableCatalog
 				PlaybackState.Paused => "Paused",
 				_ => "Stopped",
 			}, VariableSource.Transport, "play"),
-		Number("current_position", Strings.Variables.CurrentPosition.Display(), Strings.Variables.CurrentPosition.Description(),
-			s => s.PositionKnown ? s.CurrentPosition.TotalMilliseconds : null, "ms", VariableSemanticKinds.Duration, 0,
-			VariableSource.Transport, writable: true, commitOnRelease: true),
-		Number("track_duration", Strings.Variables.TrackDuration.Display(), Strings.Variables.TrackDuration.Description(),
-			s => s.Duration?.TotalMilliseconds, "ms", VariableSemanticKinds.Duration, 0),
+		Text("current_position", Strings.Variables.CurrentPosition.Display(), Strings.Variables.CurrentPosition.Description(),
+			s => s.PositionKnown ? FormatDuration(s.CurrentPosition) : null, VariableSource.Transport,
+			writable: true),
+		Text("track_duration", Strings.Variables.TrackDuration.Display(), Strings.Variables.TrackDuration.Description(),
+			s => s.Duration is { } duration ? FormatDuration(duration) : null, VariableSource.Transport),
 		Number("progress_percentage", Strings.Variables.ProgressPercentage.Display(), Strings.Variables.ProgressPercentage.Description(),
 			s => SpicetifyValues.Percent(s.ProgressFraction), "%", VariableSemanticKinds.Percentage, 1,
 			VariableSource.Transport),

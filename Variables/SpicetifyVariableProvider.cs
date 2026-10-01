@@ -133,7 +133,7 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 
 			case "current_position":
 			{
-				if (!TryReadNumber(value, out var milliseconds))
+				if (!TryReadPosition(value, out var milliseconds))
 				{
 					return VariableWriteResult.InvalidValue();
 				}
@@ -249,6 +249,33 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 				number = double.NaN;
 				return false;
 		}
+	}
+
+	private static bool TryReadPosition(object? value, out double milliseconds)
+	{
+		var text = value switch
+		{
+			string stringValue => stringValue,
+			JsonElement { ValueKind: JsonValueKind.String } element => element.GetString(),
+			_ => null,
+		};
+
+		if (text is not null)
+		{
+			var parts = text.Split(':');
+			if (parts.Length == 2
+				&& long.TryParse(parts[0], System.Globalization.NumberStyles.None,
+					System.Globalization.CultureInfo.InvariantCulture, out var minutes)
+				&& int.TryParse(parts[1], System.Globalization.NumberStyles.None,
+					System.Globalization.CultureInfo.InvariantCulture, out var seconds)
+				&& minutes >= 0 && seconds is >= 0 and < 60)
+			{
+				milliseconds = (minutes * 60d + seconds) * 1000d;
+				return true;
+			}
+		}
+
+		return TryReadNumber(value, out milliseconds);
 	}
 
 	private static bool TryReadBoolean(object? value, out bool state)
