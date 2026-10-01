@@ -14,14 +14,11 @@ public static class BridgeMessageKind
 
 public sealed record BridgeHello
 {
-		[JsonPropertyName("type")]
+	[JsonPropertyName("type")]
 	public string Type { get; init; } = BridgeMessageKind.Hello;
 
 	[JsonPropertyName("token")]
 	public string? Token { get; init; }
-
-	[JsonPropertyName("bridgeVersion")]
-	public string? BridgeVersion { get; init; }
 }
 
 public sealed record BridgeAuthFailed
@@ -37,15 +34,6 @@ public sealed record BridgeWelcome
 {
 	[JsonPropertyName("type")]
 	public string Type { get; init; } = BridgeMessageKind.Welcome;
-
-	[JsonPropertyName("sessionId")]
-	public string SessionId { get; init; } = string.Empty;
-
-	[JsonPropertyName("unavailableTimeoutSeconds")]
-	public int UnavailableTimeoutSeconds { get; init; }
-
-	[JsonPropertyName("stateIntervalMs")]
-	public int StateIntervalMs { get; init; }
 }
 
 public sealed record BridgeStateMessage
@@ -56,7 +44,7 @@ public sealed record BridgeStateMessage
 	[JsonPropertyName("state")]
 	public BridgeState? State { get; init; }
 
-		[JsonPropertyName("results")]
+	[JsonPropertyName("results")]
 	public Dictionary<string, BridgeCommandOutcome>? Results { get; init; }
 }
 
@@ -92,22 +80,25 @@ public sealed record BridgeCommand
 
 public sealed record BridgeState
 {
-		[JsonPropertyName("playback")]
+	[JsonPropertyName("playback")]
 	public BridgePlayback? Playback { get; init; }
 
-		[JsonPropertyName("track")]
+	[JsonPropertyName("track")]
 	public BridgeTrack? Track { get; init; }
 
-		[JsonPropertyName("context")]
+	[JsonPropertyName("context")]
 	public BridgeContext? Context { get; init; }
 
-		[JsonPropertyName("controls")]
+	[JsonPropertyName("queue")]
+	public BridgeQueueState? Queue { get; init; }
+
+	[JsonPropertyName("controls")]
 	public BridgeControls? Controls { get; init; }
 
-		[JsonPropertyName("capabilities")]
+	[JsonPropertyName("capabilities")]
 	public BridgeCapabilities? Capabilities { get; init; }
 
-		[JsonPropertyName("client")]
+	[JsonPropertyName("client")]
 	public BridgeClient? Client { get; init; }
 }
 
@@ -116,13 +107,13 @@ public sealed record BridgePlayback
 	[JsonPropertyName("isPlaying")]
 	public bool? IsPlaying { get; init; }
 
-		[JsonPropertyName("isPaused")]
+	[JsonPropertyName("isPaused")]
 	public bool? IsPaused { get; init; }
 
 	[JsonPropertyName("positionMs")]
 	public long? PositionMs { get; init; }
 
-		[JsonPropertyName("progressFraction")]
+	[JsonPropertyName("progressFraction")]
 	public double? ProgressFraction { get; init; }
 
 	[JsonPropertyName("durationMs")]
@@ -152,9 +143,6 @@ public sealed record BridgeTrack
 	[JsonPropertyName("uri")]
 	public string? Uri { get; init; }
 
-	[JsonPropertyName("uid")]
-	public string? Uid { get; init; }
-
 	[JsonPropertyName("name")]
 	public string? Name { get; init; }
 
@@ -173,11 +161,8 @@ public sealed record BridgeTrack
 	[JsonPropertyName("artistUri")]
 	public string? ArtistUri { get; init; }
 
-		[JsonPropertyName("imageUrl")]
+	[JsonPropertyName("imageUrl")]
 	public string? ImageUrl { get; init; }
-
-	[JsonPropertyName("durationMs")]
-	public long? DurationMs { get; init; }
 
 	[JsonPropertyName("trackNumber")]
 	public int? TrackNumber { get; init; }
@@ -202,9 +187,24 @@ public sealed record BridgeContext
 
 	[JsonPropertyName("name")]
 	public string? Name { get; init; }
+}
 
-	[JsonPropertyName("type")]
-	public string? Type { get; init; }
+public sealed record BridgeQueueState
+{
+	[JsonPropertyName("nextTracks")]
+	public IReadOnlyList<BridgeQueueTrack> NextTracks { get; init; } = Array.Empty<BridgeQueueTrack>();
+
+	[JsonPropertyName("previousTracks")]
+	public IReadOnlyList<BridgeQueueTrack> PreviousTracks { get; init; } = Array.Empty<BridgeQueueTrack>();
+}
+
+public sealed record BridgeQueueTrack
+{
+	[JsonPropertyName("name")]
+	public string? Name { get; init; }
+
+	[JsonPropertyName("uri")]
+	public string? Uri { get; init; }
 }
 
 public sealed record BridgeClient
@@ -212,36 +212,20 @@ public sealed record BridgeClient
 	[JsonPropertyName("platform")]
 	public string? Platform { get; init; }
 
-		[JsonPropertyName("deviceName")]
+	[JsonPropertyName("deviceName")]
 	public string? DeviceName { get; init; }
 }
 
 public sealed record BridgeCapabilities
 {
-	[JsonPropertyName("player")]
-	public bool Player { get; init; }
-
-	[JsonPropertyName("playerApi")]
-	public bool PlayerApi { get; init; }
-
-	[JsonPropertyName("cosmos")]
-	public bool Cosmos { get; init; }
-
 	[JsonPropertyName("history")]
 	public bool History { get; init; }
-
-	[JsonPropertyName("queue")]
-	public bool Queue { get; init; }
 
 	[JsonPropertyName("removeFromQueue")]
 	public bool RemoveFromQueue { get; init; }
 
 	[JsonPropertyName("clearQueue")]
 	public bool ClearQueue { get; init; }
-
-	[JsonPropertyName("trackLikeStatus")]
-	public bool TrackLikeStatus { get; init; }
-
 }
 
 internal static class BridgeJson

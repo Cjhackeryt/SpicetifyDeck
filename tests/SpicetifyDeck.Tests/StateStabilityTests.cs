@@ -189,6 +189,35 @@ public sealed class StateStabilityTests
 	}
 
 	[Fact]
+	public void QueueVariablesExposeNextTenAndMostRecentPreviousTrack()
+	{
+		using var manager = CreateManager();
+		var queue = new BridgeQueueState
+		{
+			NextTracks = Enumerable.Range(1, 12)
+				.Select(index => new BridgeQueueTrack { Name = $"Next {index}", Uri = $"spotify:track:next{index}" })
+				.ToArray(),
+			PreviousTracks =
+			[
+				new() { Name = "Older", Uri = "spotify:track:older" },
+				new() { Name = "Previous", Uri = "spotify:track:previous" },
+			],
+		};
+
+		manager.Accept(new BridgeState { Queue = queue });
+		var snapshot = manager.Current;
+
+		Assert.Equal("Next 1", SpicetifyVariableCatalog.Find("queue-next-track-name")!.Read(snapshot));
+		Assert.Equal("spotify:track:next1", SpicetifyVariableCatalog.Find("queue-next-track-uri")!.Read(snapshot));
+		Assert.Equal("Previous", SpicetifyVariableCatalog.Find("queue-previous-track-name")!.Read(snapshot));
+		Assert.Equal("spotify:track:previous", SpicetifyVariableCatalog.Find("queue-previous-track-uri")!.Read(snapshot));
+		Assert.Null(SpicetifyVariableCatalog.Find("queue-next-track-name")!.Read(new SpotifySnapshot()));
+
+		manager.Accept(new BridgeState { Queue = new BridgeQueueState() });
+		Assert.Null(SpicetifyVariableCatalog.Find("queue-next-track-name")!.Read(manager.Current));
+	}
+
+	[Fact]
 	public void NewTrackFieldsStayTogetherUntilTheNewTrackNameArrives()
 	{
 		using var manager = CreateManager();

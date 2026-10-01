@@ -100,6 +100,7 @@ public sealed class CatalogTests
 			// Current track
 			"track_name", "artist_name", "album_name", "album_artist", "track_uri", "album_uri",
 			"artist_uri", "current_track_id", "playlist_name", "playlist_uri",
+			"queue_next_track_name", "queue_next_track_uri", "queue_previous_track_name", "queue_previous_track_uri",
 
 			"volume", "shuffle", "repeat_mode", "muted",
 
@@ -127,10 +128,10 @@ public sealed class CatalogTests
 	}
 
 	[Fact]
-	public void TheStatusVariablesAreOnlyTheTwoConnectionOnes()
+	public void OnlyTheServiceConnectionStatusVariableIsRegistered()
 	{
 
-		string[] approved = ["spicetifydeck_connection_status", "spicetifydeck_spotify_connected"];
+		string[] approved = ["spicetifydeck_connection_status"];
 
 		var names = DeckStatusVariableCatalog.All.Select(variable => variable.Name)
 			.ToHashSet(StringComparer.Ordinal);
@@ -292,15 +293,4 @@ public sealed class CatalogTests
 			Artwork.ArtworkUrl.Resize("https://i.scdn.co/image/a300x300.jpg", 5000));
 	}
 
-	[Fact]
-	public void TwoManagersSharingCredentialsShareTheToken()
-	{
-
-		var credentials = BridgeCredentials.Load(Path.GetTempPath(), Log.Logger);
-		var first = new BridgeConnectionManager(credentials, Log.Logger);
-		var second = new BridgeConnectionManager(credentials, Log.Logger);
-
-		Assert.Equal(64, first.Token.Length);
-		Assert.Equal(first.Token, second.Token);
-	}
 }

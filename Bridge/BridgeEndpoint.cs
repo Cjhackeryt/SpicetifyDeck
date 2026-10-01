@@ -4,6 +4,9 @@ namespace SpicetifyDeck.Bridge;
 
 public sealed class BridgeEndpoint(ILogger logger)
 {
+	public const string SocketPath = "/spicetify/bridge/socket";
+	public const string ScriptPath = "/spicetify/bridge.js";
+	public const string StatusPath = "/spicetify/bridge/status";
 		public const int DefaultPort = 8975;
 
 		public const int PortScanCount = 10;
@@ -30,7 +33,7 @@ public sealed class BridgeEndpoint(ILogger logger)
 			lock (_gate)
 			{
 				return _port is { } port
-					? $"ws://127.0.0.1:{port}{BridgeEndpoints.SocketPath}"
+					? $"ws://127.0.0.1:{port}{SocketPath}"
 					: null;
 			}
 		}

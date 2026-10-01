@@ -156,7 +156,7 @@ internal sealed class BridgeListener(
 
 		private void Map(WebApplication app)
 	{
-		app.MapGet(BridgeEndpoints.SocketPath, async (HttpContext http) =>
+		app.MapGet(BridgeEndpoint.SocketPath, async (HttpContext http) =>
 		{
 			if (!http.WebSockets.IsWebSocketRequest)
 			{
@@ -169,7 +169,7 @@ internal sealed class BridgeListener(
 			await connections.ServeAsync(socket, http.RequestAborted).ConfigureAwait(false);
 		});
 
-		app.MapGet(BridgeEndpoints.ScriptPath, async (HttpContext http) =>
+		app.MapGet(BridgeEndpoint.ScriptPath, async (HttpContext http) =>
 		{
 			if (endpoint.SocketUrl is null)
 			{
@@ -183,7 +183,7 @@ internal sealed class BridgeListener(
 			await http.Response.WriteAsync(script).ConfigureAwait(false);
 		});
 
-		app.MapGet(BridgeEndpoints.StatusPath, (HttpContext http) =>
+		app.MapGet(BridgeEndpoint.StatusPath, (HttpContext http) =>
 		{
 			http.Response.ContentType = "application/json";
 			return http.Response.WriteAsJsonAsync(new

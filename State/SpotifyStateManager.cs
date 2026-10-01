@@ -54,7 +54,8 @@ public sealed class SpotifyStateManager : IDisposable
 		nameof(SpotifySnapshot.IsLiked),
 		nameof(SpotifySnapshot.ContextUri),
 		nameof(SpotifySnapshot.ContextName),
-		nameof(SpotifySnapshot.ContextType),
+		nameof(SpotifySnapshot.QueueNextTracks),
+		nameof(SpotifySnapshot.QueuePreviousTracks),
 		nameof(SpotifySnapshot.ClientPlatform),
 		nameof(SpotifySnapshot.DeviceName),
 		nameof(SpotifySnapshot.Capabilities),
@@ -532,7 +533,12 @@ public sealed class SpotifyStateManager : IDisposable
 		{
 			fields[nameof(SpotifySnapshot.ContextUri)] = context.Uri;
 			fields[nameof(SpotifySnapshot.ContextName)] = context.Name;
-			fields[nameof(SpotifySnapshot.ContextType)] = context.Type;
+		}
+
+		if (state.Queue is { } queue)
+		{
+			fields[nameof(SpotifySnapshot.QueueNextTracks)] = queue.NextTracks;
+			fields[nameof(SpotifySnapshot.QueuePreviousTracks)] = queue.PreviousTracks;
 		}
 
 		if (state.Client is { } client)
@@ -592,7 +598,8 @@ public sealed class SpotifyStateManager : IDisposable
 
 			ContextUri = AsString(Get(nameof(SpotifySnapshot.ContextUri))),
 			ContextName = AsString(Get(nameof(SpotifySnapshot.ContextName))),
-			ContextType = AsString(Get(nameof(SpotifySnapshot.ContextType))),
+			QueueNextTracks = Get(nameof(SpotifySnapshot.QueueNextTracks)) as IReadOnlyList<BridgeQueueTrack>,
+			QueuePreviousTracks = Get(nameof(SpotifySnapshot.QueuePreviousTracks)) as IReadOnlyList<BridgeQueueTrack>,
 
 			ClientPlatform = AsString(Get(nameof(SpotifySnapshot.ClientPlatform))),
 			DeviceName = AsString(Get(nameof(SpotifySnapshot.DeviceName))),
@@ -626,6 +633,19 @@ public sealed class SpotifyStateManager : IDisposable
 			}
 		}
 
+		void CompareQueue(string name, IReadOnlyList<BridgeQueueTrack>? before, IReadOnlyList<BridgeQueueTrack>? after)
+		{
+			if (before is null && after is null)
+			{
+				return;
+			}
+
+			if (before is null || after is null || !before.SequenceEqual(after))
+			{
+				builder.Add(name);
+			}
+		}
+
 		Compare(nameof(SpotifySnapshot.IsPlaying), (bool?)previous.IsPlaying, next.IsPlaying);
 		Compare(nameof(SpotifySnapshot.IsPaused), (bool?)previous.IsPaused, next.IsPaused);
 		Compare(nameof(SpotifySnapshot.IsBuffering), previous.IsBuffering, next.IsBuffering);
@@ -652,7 +672,8 @@ public sealed class SpotifyStateManager : IDisposable
 
 		CompareText(nameof(SpotifySnapshot.ContextUri), previous.ContextUri, next.ContextUri);
 		CompareText(nameof(SpotifySnapshot.ContextName), previous.ContextName, next.ContextName);
-		CompareText(nameof(SpotifySnapshot.ContextType), previous.ContextType, next.ContextType);
+		CompareQueue(nameof(SpotifySnapshot.QueueNextTracks), previous.QueueNextTracks, next.QueueNextTracks);
+		CompareQueue(nameof(SpotifySnapshot.QueuePreviousTracks), previous.QueuePreviousTracks, next.QueuePreviousTracks);
 
 		CompareText(nameof(SpotifySnapshot.ClientPlatform), previous.ClientPlatform, next.ClientPlatform);
 		CompareText(nameof(SpotifySnapshot.DeviceName), previous.DeviceName, next.DeviceName);

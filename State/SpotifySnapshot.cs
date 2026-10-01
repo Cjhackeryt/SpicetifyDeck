@@ -41,7 +41,8 @@ public sealed record SpotifySnapshot
 	// Context
 	public string? ContextUri { get; init; }
 	public string? ContextName { get; init; }
-	public string? ContextType { get; init; }
+	public IReadOnlyList<BridgeQueueTrack>? QueueNextTracks { get; init; }
+	public IReadOnlyList<BridgeQueueTrack>? QueuePreviousTracks { get; init; }
 
 	public string? ClientPlatform { get; init; }
 	public string? DeviceName { get; init; }

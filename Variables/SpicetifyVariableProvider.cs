@@ -14,8 +14,6 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 	private readonly BridgeConnectionManager _bridge;
 	private readonly SpicetifyBridgeService _bridgeService;
 	private readonly ILogger _logger;
-		private readonly System.Collections.Concurrent.ConcurrentDictionary<string, object?> _lastStatusValues =
-		new(StringComparer.OrdinalIgnoreCase);
 
 	public SpicetifyVariableProvider(
 		SpotifyStateManager state,
@@ -85,19 +83,24 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 		catch (Exception exception)
 		{
 			_logger.Debug(exception, "Reading the bridge variable {Variable} failed.", variable.Name);
-			value = null;
+			return VariableReading.Of(ConnectionFallback(_bridge.ConnectionState));
 		}
 
 		if (value is null)
 		{
-			return _lastStatusValues.TryGetValue(variable.LocalId, out var remembered)
-				? VariableReading.Of(remembered)
-				: VariableReading.Unavailable;
+			return VariableReading.Of(ConnectionFallback(_bridge.ConnectionState));
 		}
 
-		_lastStatusValues[variable.LocalId] = value;
 		return VariableReading.Of(value);
 	}
+
+	internal static string ConnectionFallback(BridgeConnectionState state) => state switch
+	{
+		BridgeConnectionState.Connected => "Bridge Connected",
+		BridgeConnectionState.Connecting or BridgeConnectionState.Authenticating => "Waiting for Spotify",
+		BridgeConnectionState.AuthenticationFailed => "Authentication Failed",
+		_ => "Bridge Disconnected",
+	};
 
 		public async ValueTask<VariableWriteResult> SetValueAsync(
 		string localId, object? value, CancellationToken cancellationToken = default)

@@ -29,9 +29,7 @@ public sealed record DeckStatusVariable(
 
 public static class DeckStatusVariableCatalog
 {
-	private static readonly TimeSpan Slow = TimeSpan.FromSeconds(5);
 	private static readonly TimeSpan Steady = TimeSpan.FromSeconds(2);
-	private static readonly TimeSpan Rare = TimeSpan.FromSeconds(30);
 
 		public static IReadOnlyList<DeckStatusVariable> All { get; } =
 	[
@@ -41,14 +39,6 @@ public static class DeckStatusVariableCatalog
 			service => StatusWord(service),
 			Strings.Variables.DeckConnectionStatus.Display(),
 			Strings.Variables.DeckConnectionStatus.Description(),
-			Steady),
-
-		new(
-			"spicetifydeck_spotify_connected",
-			VariableType.Boolean,
-			service => service.Describe().Status is BridgeStatus.Connected,
-			Strings.Variables.DeckSpotifyConnected.Display(),
-			Strings.Variables.DeckSpotifyConnected.Description(),
 			Steady),
 	];
 

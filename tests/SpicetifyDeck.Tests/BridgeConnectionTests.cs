@@ -64,11 +64,11 @@ public sealed class BridgeConnectionTests : IAsyncDisposable
 		Assert.Equal(BridgeConnectionState.Connecting, _connections.ConnectionState);
 
 		Assert.Contains("127.0.0.1", _endpoint.SocketUrl!, StringComparison.Ordinal);
-		Assert.EndsWith(BridgeEndpoints.SocketPath, _endpoint.SocketUrl!, StringComparison.Ordinal);
+		Assert.EndsWith(BridgeEndpoint.SocketPath, _endpoint.SocketUrl!, StringComparison.Ordinal);
 
 		using var http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
 		var body = await http.GetStringAsync(
-			$"http://127.0.0.1:{_endpoint.Port!.Value}{BridgeEndpoints.StatusPath}");
+			$"http://127.0.0.1:{_endpoint.Port!.Value}{BridgeEndpoint.StatusPath}");
 
 		Assert.Contains("\"connected\":false", body, StringComparison.Ordinal);
 	}
@@ -176,7 +176,7 @@ public sealed class BridgeConnectionTests : IAsyncDisposable
 		};
 
 		using var client = await ConnectAsync();
-		await SendAsync(client, new BridgeHello { Token = _credentials.Token, BridgeVersion = "2.1.0" });
+		await SendAsync(client, new BridgeHello { Token = _credentials.Token });
 		await ReadAsync(client, "welcome");
 		Assert.Equal(BridgeConnectionState.Connecting, _connections.ConnectionState);
 
@@ -186,12 +186,19 @@ public sealed class BridgeConnectionTests : IAsyncDisposable
 			{
 				Playback = new BridgePlayback { IsPlaying = true },
 				Track = new BridgeTrack { Name = "Test", Uri = "spotify:track:x" },
+				Queue = new BridgeQueueState
+				{
+					NextTracks = [new BridgeQueueTrack { Name = "Next", Uri = "spotify:track:next" }],
+					PreviousTracks = [new BridgeQueueTrack { Name = "Previous", Uri = "spotify:track:previous" }],
+				},
 			},
 		});
 
 		var report = await state.Task.WaitAsync(TimeSpan.FromSeconds(10));
 		Assert.True(report.Playback?.IsPlaying);
 		Assert.Equal("Test", report.Track?.Name);
+		Assert.Equal("Next", report.Queue?.NextTracks[0].Name);
+		Assert.Equal("Previous", report.Queue?.PreviousTracks[0].Name);
 		Assert.Equal(BridgeConnectionState.Connected, _connections.ConnectionState);
 	}
 
@@ -299,7 +306,7 @@ public sealed class BridgeConnectionTests : IAsyncDisposable
 		var port = _endpoint.Port!.Value;
 
 		using var http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
-		var body = await http.GetStringAsync($"http://127.0.0.1:{port}{BridgeEndpoints.StatusPath}");
+		var body = await http.GetStringAsync($"http://127.0.0.1:{port}{BridgeEndpoint.StatusPath}");
 
 		Assert.Contains("\"connected\":false", body, StringComparison.Ordinal);
 		Assert.Contains(_endpoint.SocketUrl!, body, StringComparison.Ordinal);

@@ -14,7 +14,7 @@ public sealed class PluginEndpoint(ILogger logger)
 		public string? BaseAddress => Volatile.Read(ref _baseAddress);
 
 		public string? SocketUrl =>
-		BaseAddress is { } address ? string.Create(CultureInfo.InvariantCulture, $"{address.Replace("http", "ws", StringComparison.Ordinal)}{BridgeEndpoints.SocketPath}") : null;
+		BaseAddress is { } address ? string.Create(CultureInfo.InvariantCulture, $"{address.Replace("http", "ws", StringComparison.Ordinal)}{BridgeEndpoint.SocketPath}") : null;
 
 		public void Resolve(IServer? server)
 	{
