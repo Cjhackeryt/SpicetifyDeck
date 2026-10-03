@@ -3,7 +3,7 @@
   "id": "com.cjhackeryt.spicetifydeck",
   "name": "SpicetifyDeck",
   "version": "2.6.1",
-  "description": "Control your Spotify desktop client from your Macro Deck through Spicetify: playback, volume, queue, search, library, live variables and a now-playing widget. No Spotify account or developer setup required.",
+  "description": "Control your Spotify desktop client from your Macro Deck through Spicetify. No Spotify account or developer setup required. AI was used in the development of this plugin.",
   "icon": "Assets/icon.svg",
   "entrypoints": {
     "win-x64": {
@@ -15,6 +15,13 @@
     },
     "linux-x64": {
       "executable": "runtimes/linux-x64/SpicetifyDeck.dll",
+      "runtime": {
+        "kind": "FrameworkDependent",
+        "dotnetVersion": "10.0"
+      }
+    },
+    "arch-x64": {
+      "executable": "runtimes/arch-x64/SpicetifyDeck.dll",
       "runtime": {
         "kind": "FrameworkDependent",
         "dotnetVersion": "10.0"
