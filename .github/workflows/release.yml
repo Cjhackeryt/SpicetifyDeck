@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    uses: SpicetifyDeck/GitHub-Actions/.github/workflows/publish-plugin.yml@v1
+    uses: Macro-Deck-App/GitHub-Actions/.github/workflows/publish-plugin.yml@v1
     permissions:
       contents: read
       id-token: write
