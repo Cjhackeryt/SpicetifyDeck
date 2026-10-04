@@ -40,7 +40,7 @@ public sealed class LocalizationTests
 			"Actions.Bridge.Uninstall", "Actions.Bridge.Restart",
 			"Actions.Bridge.ResetAuth", "Actions.Bridge.Errors",
 			"Variables.IsPlaying", "Variables.PlaybackState", "Variables.CurrentPosition",
-			"Variables.TrackDuration", "Variables.ProgressPercentage",
+			"Variables.TrackDuration", "Variables.ProgressSeconds", "Variables.ProgressPercentage",
 			"Variables.TrackName", "Variables.ArtistName", "Variables.AlbumName", "Variables.AlbumArtist",
 			"Variables.PlaylistName", "Variables.PlaylistUri",
 			"Variables.QueueNextTrackName", "Variables.QueueNextTrackUri",

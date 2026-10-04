@@ -70,7 +70,7 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 			return ValueTask.FromResult(VariableReading.Unavailable);
 		}
 
-		return ValueTask.FromResult(VariableReading.Of(value, Minimum(variable), Maximum(variable), Step(variable)));
+		return ValueTask.FromResult(VariableReading.Of(value, Minimum(variable), Maximum(variable, snapshot), Step(variable)));
 	}
 
 		private VariableReading ReadStatus(DeckStatusVariable variable)
@@ -118,6 +118,44 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 
 		switch (variable.Name)
 		{
+			case "progress_seconds":
+			{
+				if (!TryReadNumber(value, out var seconds))
+				{
+					return VariableWriteResult.InvalidValue();
+				}
+
+				if (_state.Current.Duration is not { } duration || duration <= TimeSpan.Zero)
+				{
+					return VariableWriteResult.Unavailable();
+				}
+
+				var positionMs = Math.Clamp(seconds, 0, duration.TotalSeconds) * 1000d;
+				return await SendAsync(
+					BridgeCommandKind.SeekTo,
+					new Dictionary<string, object?> { ["positionMs"] = positionMs },
+					cancellationToken).ConfigureAwait(false);
+			}
+
+			case "progress_percentage":
+			{
+				if (!TryReadNumber(value, out var percent))
+				{
+					return VariableWriteResult.InvalidValue();
+				}
+
+				if (_state.Current.Duration is not { } duration || duration <= TimeSpan.Zero)
+				{
+					return VariableWriteResult.Unavailable();
+				}
+
+				var positionMs = duration.TotalMilliseconds * Math.Clamp(percent, 0, 100) / 100d;
+				return await SendAsync(
+					BridgeCommandKind.SeekTo,
+					new Dictionary<string, object?> { ["positionMs"] = positionMs },
+					cancellationToken).ConfigureAwait(false);
+			}
+
 			case "volume":
 			{
 				if (!TryReadNumber(value, out var percent))
@@ -200,14 +238,15 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 
 	private static double? Minimum(SpicetifyVariable variable) => variable.Unit switch
 	{
-		"%" or "ms" => 0,
+		"%" or "s" or "ms" => 0,
 		"x" => 0.25,
 		_ => null,
 	};
 
-	private static double? Maximum(SpicetifyVariable variable) => variable.Unit switch
+	private static double? Maximum(SpicetifyVariable variable, SpotifySnapshot snapshot) => variable.Unit switch
 	{
 		"%" => 100,
+		"s" => snapshot.Duration?.TotalSeconds,
 		"x" => 3,
 		_ => null,
 	};
@@ -215,6 +254,7 @@ public sealed class SpicetifyVariableProvider : IVariableProvider
 	private static double? Step(SpicetifyVariable variable) => variable.Unit switch
 	{
 		"%" => 1,
+		"s" => 1,
 		"ms" => 1000,
 		"x" => 0.05,
 		_ => null,

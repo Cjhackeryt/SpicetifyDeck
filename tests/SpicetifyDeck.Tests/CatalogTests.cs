@@ -111,7 +111,7 @@ public sealed class CatalogTests
 		string[] approved =
 		[
 			// Playback
-			"is_playing", "playback_state", "current_position", "track_duration", "progress_percentage",
+			"is_playing", "playback_state", "current_position", "track_duration", "progress_seconds", "progress_percentage",
 
 			// Current track
 			"track_name", "artist_name", "album_name", "album_artist", "track_uri", "album_uri",
@@ -211,10 +211,28 @@ public sealed class CatalogTests
 			.Select(variable => variable.Name)
 			.ToArray();
 
-		foreach (var name in new[] { "volume", "current_position", "shuffle", "repeat_mode", "muted" })
+		foreach (var name in new[] { "volume", "current_position", "progress_seconds", "progress_percentage", "shuffle", "repeat_mode", "muted" })
 		{
 			Assert.Contains(name, writable);
 		}
+	}
+
+	[Fact]
+	public void ProgressSecondsIsANumericSliderBoundedByTrackDuration()
+	{
+		var variable = SpicetifyVariableCatalog.Find("progress-seconds")!;
+		var definition = variable.ToDefinition();
+
+		Assert.Equal(VariableType.Numeric, variable.Type);
+		Assert.True(variable.Writable);
+		Assert.Equal("s", variable.Unit);
+		Assert.Equal(0, variable.DecimalPlaces);
+		Assert.Equal(10d, variable.Read(new SpotifySnapshot
+		{
+			PositionKnown = true,
+			Position = TimeSpan.FromSeconds(10.4),
+		}));
+		Assert.NotNull(definition.Write);
 	}
 
 	[Fact]

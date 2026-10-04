@@ -371,6 +371,12 @@
   <data name="Variables.TrackDuration.Description" xml:space="preserve">
     <value>How long the current track is, in minutes and seconds (m:ss).</value>
   </data>
+  <data name="Variables.ProgressSeconds.Display" xml:space="preserve">
+    <value>Progress in seconds</value>
+  </data>
+  <data name="Variables.ProgressSeconds.Description" xml:space="preserve">
+    <value>Playback position in seconds. Writable as a slider; its range follows the current track duration.</value>
+  </data>
   <data name="Variables.ProgressPercentage.Display" xml:space="preserve">
     <value>Progress percentage</value>
   </data>
