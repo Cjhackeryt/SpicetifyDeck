@@ -74,6 +74,23 @@ public sealed class ActionOutcomeTests
 			"A refused command must say why, not just that it failed.");
 	}
 
+	[Fact]
+	public void SpotifyUriLaunchUsesAnOperatingSystemLauncherWithoutShellExecution()
+	{
+		const string uri = "spotify:track:4iV5W9uYEdYUVa79Axb7Rh";
+
+		var startInfo = OpenSpotifyAction.CreateUriLauncherStartInfo(uri);
+
+		var expectedLauncher = OperatingSystem.IsWindows()
+			? "explorer.exe"
+			: OperatingSystem.IsMacOS()
+				? "open"
+				: "xdg-open";
+		Assert.Equal(expectedLauncher, startInfo.FileName);
+		Assert.False(startInfo.UseShellExecute);
+		Assert.Equal(new[] { uri }, startInfo.ArgumentList);
+	}
+
 	private sealed class ProbeAction(SpotifyStateManager state, BridgeConnectionManager bridge, bool capabilityPresent)
 		: SpicetifyActionBase(state, bridge, Serilog.Log.Logger)
 	{

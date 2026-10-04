@@ -132,10 +132,7 @@ public sealed class OpenSpotifyAction(SpotifyStateManager state, BridgeConnectio
 
 		try
 		{
-			using var process = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(uri ?? "spotify:")
-			{
-				UseShellExecute = true,
-			});
+			using var process = System.Diagnostics.Process.Start(CreateUriLauncherStartInfo(uri ?? "spotify:"));
 
 			return Task.FromResult<LocalizedText?>(process is null
 				? Strings.Actions.OpenSpotify.Errors.NotRunning()
@@ -146,5 +143,20 @@ public sealed class OpenSpotifyAction(SpotifyStateManager state, BridgeConnectio
 			Log.Debug(exception, "Could not start the Spotify client through its protocol handler.");
 			return Task.FromResult<LocalizedText?>(Strings.Actions.OpenSpotify.Errors.NotInstalled());
 		}
+	}
+
+	internal static System.Diagnostics.ProcessStartInfo CreateUriLauncherStartInfo(string uri)
+	{
+		var fileName = OperatingSystem.IsWindows()
+			? "explorer.exe"
+			: OperatingSystem.IsMacOS()
+				? "open"
+				: "xdg-open";
+		var startInfo = new System.Diagnostics.ProcessStartInfo(fileName)
+		{
+			UseShellExecute = false,
+		};
+		startInfo.ArgumentList.Add(uri);
+		return startInfo;
 	}
 }
