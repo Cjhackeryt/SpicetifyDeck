@@ -28,7 +28,7 @@
       ],
       "output": "bin/publish/linux-x64"
     },
-    "linux-x64": {
+    "arch-x64": {
       "executable": "dotnet",
       "arguments": [
         "publish", "SpicetifyDeckPlugin.csproj",
