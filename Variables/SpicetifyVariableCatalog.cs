@@ -57,9 +57,12 @@ public static class SpicetifyVariableCatalog
 			writable: true),
 		Text("track_duration", Strings.Variables.TrackDuration.Display(), Strings.Variables.TrackDuration.Description(),
 			s => s.Duration is { } duration ? FormatDuration(duration) : null, VariableSource.Transport),
+		Number("progress_seconds", Strings.Variables.ProgressSeconds.Display(), Strings.Variables.ProgressSeconds.Description(),
+			s => s.PositionKnown ? Math.Round(s.CurrentPosition.TotalSeconds) : null, "s", decimals: 0,
+			source: VariableSource.Transport, writable: true),
 		Number("progress_percentage", Strings.Variables.ProgressPercentage.Display(), Strings.Variables.ProgressPercentage.Description(),
 			s => SpicetifyValues.Percent(s.ProgressFraction), "%", VariableSemanticKinds.Percentage, 1,
-			VariableSource.Transport),
+			VariableSource.Transport, writable: true),
 
 		Text("track_name", Strings.Variables.TrackName.Display(), Strings.Variables.TrackName.Description(),
 			s => s.TrackName, VariableSource.Transport),

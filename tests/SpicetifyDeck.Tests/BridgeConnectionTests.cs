@@ -6,6 +6,7 @@ using System.Text.Json;
 using Serilog;
 using SpicetifyDeck.Bridge;
 using SpicetifyDeck.State;
+using SpicetifyDeck.Variables;
 using Xunit;
 
 namespace SpicetifyDeck.Tests;
@@ -285,6 +286,73 @@ public sealed class BridgeConnectionTests : IAsyncDisposable
 
 		var result = await command.WaitAsync(TimeSpan.FromSeconds(10));
 		Assert.True(result.Ok);
+	}
+
+	[Fact]
+	public async Task ProgressVariablesSeekToTheirRequestedPositions()
+	{
+		using var state = new SpotifyStateManager(_connections, new PluginSettings(), Serilog.Log.Logger);
+		var updated = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+		var service = new SpicetifyBridgeService(
+			new SpicetifyLocator(Serilog.Log.Logger),
+			new SpicetifyCli(Serilog.Log.Logger),
+			_generator,
+			_credentials,
+			_connections,
+			_endpoint,
+			Serilog.Log.Logger);
+		var provider = new SpicetifyVariableProvider(state, _connections, service, Serilog.Log.Logger);
+
+		await _listener.StartAsync(CancellationToken.None);
+		using var client = await ConnectAsync();
+		await SendAsync(client, new BridgeHello { Token = _credentials.Token });
+		await ReadAsync(client, "welcome");
+		state.Changed += (_, _) =>
+		{
+			updated.TrySetResult(true);
+			return Task.CompletedTask;
+		};
+		await SendAsync(client, new BridgeStateMessage
+		{
+			State = new BridgeState { Playback = new BridgePlayback { DurationMs = 120_000, PositionMs = 0 } },
+		});
+		await updated.Task.WaitAsync(TimeSpan.FromSeconds(10));
+
+		var write = provider.SetValueAsync("progress-percentage", 25d).AsTask();
+		var commandText = await ReadAsync(client, "commands");
+		using var command = JsonDocument.Parse(commandText);
+		var commandItem = command.RootElement.GetProperty("commands")[0];
+		Assert.Equal(BridgeCommandKind.SeekTo, commandItem.GetProperty("kind").GetString());
+		Assert.Equal(30_000d, commandItem.GetProperty("payload").GetProperty("positionMs").GetDouble());
+
+		var id = commandItem.GetProperty("id").GetString()!;
+		await SendAsync(client, new BridgeStateMessage
+		{
+			State = new BridgeState { Playback = new BridgePlayback { DurationMs = 120_000, PositionMs = 30_000 } },
+			Results = new Dictionary<string, BridgeCommandOutcome>(StringComparer.Ordinal)
+			{
+				[id] = new() { Ok = true },
+			},
+		});
+		await write.WaitAsync(TimeSpan.FromSeconds(10));
+
+		var secondsWrite = provider.SetValueAsync("progress-seconds", 45d).AsTask();
+		var secondsCommandText = await ReadAsync(client, "commands");
+		using var secondsCommand = JsonDocument.Parse(secondsCommandText);
+		var secondsCommandItem = secondsCommand.RootElement.GetProperty("commands")[0];
+		Assert.Equal(BridgeCommandKind.SeekTo, secondsCommandItem.GetProperty("kind").GetString());
+		Assert.Equal(45_000d, secondsCommandItem.GetProperty("payload").GetProperty("positionMs").GetDouble());
+
+		var secondsId = secondsCommandItem.GetProperty("id").GetString()!;
+		await SendAsync(client, new BridgeStateMessage
+		{
+			State = new BridgeState { Playback = new BridgePlayback { DurationMs = 120_000, PositionMs = 45_000 } },
+			Results = new Dictionary<string, BridgeCommandOutcome>(StringComparer.Ordinal)
+			{
+				[secondsId] = new() { Ok = true },
+			},
+		});
+		await secondsWrite.WaitAsync(TimeSpan.FromSeconds(10));
 	}
 
 	[Fact]
