@@ -43,9 +43,9 @@
     }
   },
   "publisher": {
-    "name": "CJ Hacker YT and NeonLightning"
+    "name": "cjhackeryt"
   },
-  "repository": "https://github.com/CJ-Hacker-YT/SpicetifyDeck",
+  "repository": "https://github.com/Cjhackeryt/SpicetifyDeck",
   "license": "MIT",
   "compatibility": {
     "macroDeck": ">=3.0.0-beta.15"
