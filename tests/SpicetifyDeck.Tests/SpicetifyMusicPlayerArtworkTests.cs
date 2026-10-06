@@ -9,6 +9,18 @@ namespace SpicetifyDeck.Tests;
 public sealed class SpicetifyMusicPlayerArtworkTests
 {
 	[Fact]
+	public void ArtworkFetcherAllowsOnlyHttpsSpotifyCdnUrlsAndSafeSpotifyImageIds()
+	{
+		Assert.True(ArtworkFetcher.TryGetArtworkUri("https://i.scdn.co/image/cover", out _));
+		Assert.True(ArtworkFetcher.TryGetArtworkUri("spotify:image:cover123", out var converted));
+		Assert.Equal("https://i.scdn.co/image/cover123", converted?.AbsoluteUri);
+		Assert.False(ArtworkFetcher.TryGetArtworkUri("spotify:image:localfile:C:\\cover.jpg", out _));
+		Assert.False(ArtworkFetcher.TryGetArtworkUri("http://i.scdn.co/image/cover", out _));
+		Assert.False(ArtworkFetcher.TryGetArtworkUri("https://localhost/image.jpg", out _));
+		Assert.False(ArtworkFetcher.TryGetArtworkUri("https://i.scdn.co.evil.example/image/cover", out _));
+	}
+
+	[Fact]
 	public async Task ArtworkIdResolvesItsImageEvenAfterPlaybackMovesToAnotherTrack()
 	{
 		const string firstImage = "https://i.scdn.co/image/ab67616d00000001300x300.jpg";

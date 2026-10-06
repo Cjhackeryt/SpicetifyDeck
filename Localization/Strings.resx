@@ -307,6 +307,9 @@
   <data name="Actions.OpenPage.NoSupport" xml:space="preserve">
     <value>This Spotify version does not let the bridge open pages.</value>
   </data>
+  <data name="Actions.OpenPage.Errors.InvalidUri" xml:space="preserve">
+    <value>Enter a valid Spotify URI for the page to open.</value>
+  </data>
   <data name="Actions.OpenSpotify.Name" xml:space="preserve">
     <value>Open Spotify</value>
   </data>
@@ -317,16 +320,19 @@
     <value>Open something specific</value>
   </data>
   <data name="Actions.OpenSpotify.Uri.Description" xml:space="preserve">
-    <value>A URI to open instead of the client's home page.</value>
+    <value>A Spotify URI or an HTTPS link from open.spotify.com to open instead of the client's home page.</value>
   </data>
   <data name="Actions.OpenSpotify.Uri.Placeholder" xml:space="preserve">
-    <value>spotify: URI</value>
+    <value>spotify: URI or https://open.spotify.com link</value>
   </data>
   <data name="Actions.OpenSpotify.Errors.NotInstalled" xml:space="preserve">
     <value>Spotify does not appear to be installed on this computer.</value>
   </data>
   <data name="Actions.OpenSpotify.Errors.NotRunning" xml:space="preserve">
     <value>The Spotify client could not be started.</value>
+  </data>
+  <data name="Actions.OpenSpotify.Errors.InvalidUri" xml:space="preserve">
+    <value>Enter a Spotify URI or an HTTPS link hosted by open.spotify.com.</value>
   </data>
   <data name="Actions.Errors.NoCurrentTrack" xml:space="preserve">
     <value>Nothing is playing in Spotify right now.</value>
@@ -381,7 +387,7 @@
     <value>Progress percentage</value>
   </data>
   <data name="Variables.ProgressPercentage.Description" xml:space="preserve">
-    <value>How far through the track playback is, as a percentage.</value>
+    <value>How far through the track playback is, as a percentage. Writable to seek to a percentage of the track.</value>
   </data>
   <data name="Variables.TrackName.Display" xml:space="preserve">
     <value>Track name</value>

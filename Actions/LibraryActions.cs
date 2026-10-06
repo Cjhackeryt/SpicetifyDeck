@@ -99,12 +99,20 @@ public sealed class OpenPageAction(SpotifyStateManager state, BridgeConnectionMa
 			"currentArtist" => snapshot.ArtistUri,
 			"currentAlbum" => snapshot.AlbumUri,
 			"likedSongs" => "spotify:collection:tracks",
-			"custom" => SpotifyUris.Normalize(ActionParameters.ReadString(context.Parameters, "uri")),
+			"custom" => SpotifyUriValidator.NormalizePageUri(ActionParameters.ReadString(context.Parameters, "uri")),
 			_ => snapshot.AlbumUri ?? snapshot.TrackUri,
 		};
 
+		if (uri is null)
+		{
+			return target == "custom"
+				? Strings.Actions.OpenPage.Errors.InvalidUri()
+				: Strings.Actions.Errors.NoCurrentTrack();
+		}
+
+		uri = SpotifyUriValidator.NormalizePageUri(uri);
 		return uri is null
-			? Strings.Actions.Errors.NoCurrentTrack()
+			? Strings.Actions.OpenPage.Errors.InvalidUri()
 			: await SendAsync(BridgeCommandKind.OpenUri, Payload("uri", uri), context.CancellationToken)
 				.ConfigureAwait(false);
 	}
@@ -128,11 +136,15 @@ public sealed class OpenSpotifyAction(SpotifyStateManager state, BridgeConnectio
 	protected override Task<LocalizedText?> ExecuteAsync(ActionExecutionContext context)
 	{
 		var typed = ActionParameters.ReadString(context.Parameters, "uri");
-		var uri = typed is null ? State.Current.AlbumUri ?? State.Current.TrackUri : SpotifyUris.Normalize(typed);
+		var input = typed ?? State.Current.AlbumUri ?? State.Current.TrackUri ?? "spotify:";
+		if (!SpotifyUriValidator.TryGetOpenTarget(input, out var uri))
+		{
+			return Task.FromResult<LocalizedText?>(Strings.Actions.OpenSpotify.Errors.InvalidUri());
+		}
 
 		try
 		{
-			using var process = System.Diagnostics.Process.Start(CreateUriLauncherStartInfo(uri ?? "spotify:"));
+			using var process = System.Diagnostics.Process.Start(CreateUriLauncherStartInfo(uri));
 
 			return Task.FromResult<LocalizedText?>(process is null
 				? Strings.Actions.OpenSpotify.Errors.NotRunning()

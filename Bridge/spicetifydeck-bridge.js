@@ -463,8 +463,9 @@
 			albumUri: albumUri,
 			artistUri: artistUri,
 			imageUrl: firstImageUrl(
-				meta.image_url,
+				meta.image_xlarge_url,
 				meta.image_large_url,
+				meta.image_url,
 				item.image_url,
 				item.imageUrl,
 				album.images,
@@ -743,13 +744,13 @@
 
 	function openUri(uri) {
 		var parts = uri.split(":");
-		if (parts.length < 3) {
+		if (parts.length !== 3 || parts[0] !== "spotify") {
 			throw new Error("'" + uri + "' is not a Spotify URI.");
 		}
-		var kind = parts[parts.length - 2];
-		var id = parts[parts.length - 1];
+		var kind = parts[1];
+		var id = parts[2];
 		var section = OPEN_PATHS[kind];
-		if (!section) {
+		if (!section || !/^[A-Za-z0-9_-]+$/.test(id)) {
 			throw new Error(
 				kind === "track"
 					? "A track has no page of its own. Open the current album instead."

@@ -17,7 +17,7 @@ var builder = MacroDeckPlugin.CreatePlugin(args)
 builder.Services.AddHttpClient(nameof(ArtworkFetcher), client =>
 {
 	client.Timeout = TimeSpan.FromSeconds(20);
-});
+}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 
 builder.Services.AddSingleton<PluginSettings>();
 builder.Services.AddSingleton<SpicetifyLocator>();

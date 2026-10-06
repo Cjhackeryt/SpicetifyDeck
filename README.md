@@ -38,7 +38,7 @@ The `spicetifydeck-connection-status` variable also reports the bridge status. A
 
 ## Values on your deck
 
-Playback values include play state, position, duration, progress, and volume. Track values include name, artist, album, and their URIs. Context values show the current playlist or radio source. Queue values show the next and previous tracks. Values the Spotify client cannot provide are shown as unavailable rather than guessed.
+Playback values include play state, position, duration, progress, and volume. The writable `progress_seconds` and `progress_percentage` variables seek within the current track when set. Track values include name, artist, album, and their URIs. Context values show the current playlist or radio source. Queue values show the next and previous tracks. Values the Spotify client cannot provide are shown as unavailable rather than guessed.
 
 ## For contributors
 

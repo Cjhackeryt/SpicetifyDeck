@@ -309,6 +309,44 @@ public sealed class CatalogTests
 		Assert.Null(SpotifyUris.KindOf(null));
 	}
 
+	[Theory]
+	[InlineData("spotify:")]
+	[InlineData("spotify:track:4iV5W9uYEdYUVa79Axb7Rh")]
+	[InlineData("https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh?si=abc123")]
+	public void OpenSpotifyAllowsSpotifyUrisAndOfficialWebLinks(string input)
+	{
+		Assert.True(SpotifyUriValidator.TryGetOpenTarget(input, out var target));
+		Assert.NotEmpty(target);
+	}
+
+	[Theory]
+	[InlineData("file:///C:/Windows/win.ini")]
+	[InlineData("javascript:alert(1)")]
+	[InlineData("data:text/html,hello")]
+	[InlineData("cmd:")]
+	[InlineData("powershell:")]
+	[InlineData("http://open.spotify.com/track/abc")]
+	[InlineData("https://open.spotify.com.evil.example/track/abc")]
+	[InlineData("https://user@open.spotify.com/track/abc")]
+	[InlineData("https://open.spotify.com:444/track/abc")]
+	[InlineData("C:\\Windows\\win.ini")]
+	[InlineData("spotify:track:bad/id")]
+	[InlineData("spotify:malformed")]
+	public void OpenSpotifyRejectsUnsafeTargets(string input)
+	{
+		Assert.False(SpotifyUriValidator.TryGetOpenTarget(input, out _));
+	}
+
+	[Fact]
+	public void InClientPageNavigationOnlyAcceptsSpotifyPageUris()
+	{
+		Assert.Equal("spotify:album:4iV5W9uYEdYUVa79Axb7Rh",
+			SpotifyUriValidator.NormalizePageUri("spotify:album:4iV5W9uYEdYUVa79Axb7Rh"));
+		Assert.Null(SpotifyUriValidator.NormalizePageUri("https://open.spotify.com/album/abc"));
+		Assert.Null(SpotifyUriValidator.NormalizePageUri("spotify:album:abc/../../settings"));
+		Assert.Null(SpotifyUriValidator.NormalizePageUri("spotify:track:abc"));
+	}
+
 	[Fact]
 	public void ArtworkUrlsAreResizedWhenTheyCarryASizeAndLeftAloneWhenTheyDoNot()
 	{
