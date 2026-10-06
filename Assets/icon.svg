@@ -1,19 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="SpicetifyDeck">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Spotify and Spicetify audio flame">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1db954" />
-      <stop offset="1" stop-color="#12833c" />
+    <linearGradient id="fire" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#ffcf42" />
+      <stop offset="0.52" stop-color="#ff762e" />
+      <stop offset="1" stop-color="#f04438" />
     </linearGradient>
   </defs>
-  <rect width="128" height="128" rx="26" fill="url(#bg)" />
-  <rect x="26" y="34" width="76" height="60" rx="12" fill="#0b1220" opacity="0.82" />
-  <g fill="#1db954">
-    <rect x="38" y="62" width="7" height="20" rx="3.5" />
-    <rect x="50" y="52" width="7" height="40" rx="3.5" />
-    <rect x="62" y="44" width="7" height="56" rx="3.5" />
-    <rect x="74" y="54" width="7" height="36" rx="3.5" />
-    <rect x="86" y="60" width="7" height="24" rx="3.5" />
+  <rect width="128" height="128" rx="28" fill="#101714" />
+  <path
+    d="M68 13c7 13 2 22 10 31 5-6 6-13 4-19 15 14 24 28 21 44 8 19-5 44-25 49-22 7-48-7-53-29-5-20 7-39 23-54-1 11 2 17 7 21 7-12 8-27 13-43Z"
+    fill="url(#fire)"
+  />
+  <path
+    d="M65 53c-2 10-13 19-13 31 0 10 5 17 13 17 9 0 14-7 14-16 0-12-9-19-14-32Z"
+    fill="#18241e"
+  />
+  <g fill="#1ed760">
+    <rect x="55" y="76" width="6" height="17" rx="3" />
+    <rect x="62" y="69" width="6" height="28" rx="3" />
+    <rect x="69" y="79" width="6" height="14" rx="3" />
   </g>
-  <rect x="38" y="42" width="34" height="5" rx="2.5" fill="#e8f7ee" />
-  <rect x="38" y="42" width="16" height="5" rx="2.5" fill="#f5c518" />
 </svg>
