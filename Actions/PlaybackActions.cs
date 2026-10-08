@@ -106,7 +106,7 @@ public sealed class SkipAction(SpotifyStateManager state, BridgeConnectionManage
 
 		return SendAsync(
 			forward ? BridgeCommandKind.SkipForward : BridgeCommandKind.SkipBackward,
-			Payload("deltaMs", forward ? milliseconds : -milliseconds),
+			Payload("deltaMs", milliseconds),
 			context.CancellationToken);
 	}
 }
