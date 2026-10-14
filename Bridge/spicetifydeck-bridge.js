@@ -678,10 +678,14 @@
 			return require(api.clearQueue, "queue clearing").call(api);
 		},
 		setLiked: function (payload) {
-			Spicetify.Player.setHeart(payload.liked === true);
+			return setLiked(payload.liked === true);
 		},
 		toggleLiked: function () {
-			Spicetify.Player.toggleHeart();
+			var current = bool2(function () { return call(Spicetify.Player, "getHeart"); });
+			if (current === null) {
+				return Spicetify.Player.toggleHeart();
+			}
+			return setLiked(!current);
 		},
 		playUri: function (payload) {
 			var uri = String(payload.uri || "");
@@ -720,6 +724,18 @@
 			return 1;
 		}
 		return 0;
+	}
+
+	// Player.setHeart clicks a DOM button that is not rendered while the window is hidden to the tray.
+	function setLiked(liked) {
+		var data = safeData();
+		var uri = data && data.item ? data.item.uri : null;
+		var library = Spicetify.Platform && Spicetify.Platform.LibraryAPI;
+		var method = library && (liked ? library.add : library.remove);
+		if (uri && typeof method === "function") {
+			return method.call(library, { uris: [uri] });
+		}
+		return Spicetify.Player.setHeart(liked);
 	}
 
 	function seekTo(positionMs) {
