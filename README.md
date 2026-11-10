@@ -2,7 +2,8 @@
 
 Control Spotify from Macro Deck using Spicetify. Use your existing Spotify sign-in; no developer account, API key, or extra Spotify login is needed.
 
-<img width="886" height="508" alt="spicetify" src="https://github.com/user-attachments/assets/fef53558-ee1f-4629-9206-651dd98ffc5f" />
+<img width="1442" height="734" alt="image" src="https://github.com/user-attachments/assets/16d43820-1d27-42a3-aeca-b14c7ce35794" />
+
 
 
 ## What you can do
